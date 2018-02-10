@@ -1,0 +1,198 @@
+    
+
+一、建立项目运行环境并初始化项目
+1、新建项目文件夹dj
+
+2、使用virtualenv新建一个python运行环境
+virtualenv venv
+
+3、进入项目文件夹dj，激活运行环境
+venv\scripts\active.bat
+
+4、安装django
+pip install django
+
+5、创建一个django项目
+django-admin startproject mysite
+
+6、运行项目
+python manage.py runserver
+或指定端口
+python manage.py runserver 8080
+
+
+
+
+二、创建django程序
+
+1、创建一个blog程序
+python manage.py startapp blog
+
+blog程序创建完成后，在项目mysite下会生成一个blog文件夹，这里就是blog程序所在
+
+
+2、为blog程序定义视图
+编辑mysite/blog/views.py
+
+------------------------------------------
+mysite/blog/views.py
+------------------------------------------
+from django.shortcuts import render
+from django.http import HttpResponse
+
+def index(request):
+  return HttpResponse("Hello django!")
+------------------------------------------
+
+3、为blog程序创建路由
+创建mysite/blog/urls.py文件
+
+------------------------------------------
+mysite/blog/urls.py
+------------------------------------------
+from django.urls import path
+from . import views
+
+urlpatterns = [
+  path('', views.index, name='index')
+]
+------------------------------------------
+
+4、将blog程序的路由定义到项目中去
+编辑mysite/mysite/urls.py
+
+------------------------------------------
+mysite/mysite/urls.py
+------------------------------------------
+from django.contrib import admin
+from django.urls import include, path
+
+urlpatterns = [
+  path('blog/', include('blog.urls')),
+  path('admin/', admin.site.urls),
+]
+------------------------------------------
+
+5、运行项目
+python manage.py runserver
+
+重新运行项目，请可以通过http://127.0.0.1:8000/blog/访问blog程序
+
+
+
+三、为项目配置数据库
+1、数据库配置
+编辑mysite/mysite/settings.py中关于数据库的配置项
+
+------------------------------------------
+mysite/mysite/settings.py
+------------------------------------------
+...
+
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME': 'dj',
+        'USER': 'root',
+        'PASSWORD': '',
+        'HOST': '127.0.0.1',
+        'PORT': '3306',
+    }
+}
+
+...
+------------------------------------------
+
+2、安装mysql客户端插件
+这里使用mysql作为数据库，要先安装mysqlclient
+pip install mysqlclient
+
+3、数据迁移
+python manage.py migrate
+
+
+4、创建模型
+编辑mysite/blog/models.py，创建Post模型
+
+------------------------------------------
+mysite/blog/models.py
+------------------------------------------
+from django.db import models
+
+class Post(models.Model):
+    post_title = models.CharField(max_length=200)
+    post_content = models.TextField()
+    post_publish = models.DateTimeField('date published')
+
+    def __str__(self):
+        return self.post_title
+------------------------------------------
+
+
+5、将blog注册到项目程序中
+编辑mysite/mysite/settings.py
+
+------------------------------------------
+mysite/blog/settings.py
+------------------------------------------
+...
+
+INSTALLED_APPS = [
+    'blog.apps.BlogConfig',
+    'django.contrib.admin',
+    'django.contrib.auth',
+    'django.contrib.contenttypes',
+    'django.contrib.sessions',
+    'django.contrib.messages',
+    'django.contrib.staticfiles',
+]
+
+...
+------------------------------------------
+
+6、创建blog程序的迁移
+python manage.py makemigrations blog
+
+迁移
+python manage.py sqlmigrate blog 0001
+
+应用迁移
+python manage.py migrate
+
+这样就会在数据库中生成数据表
+
+
+
+
+四、创建项目管理后台
+1、创建管理员用户
+python manage.py createsuperuser
+
+创建好管理员用户后就可以打开后台了
+http://127.0.0.1:8000/admin/
+
+
+2、将blog模型注册到后台，让我们可以在后台修改
+
+编辑mysite/blog/admin.py
+------------------------------------------
+mysite/blog/admin.py
+------------------------------------------
+from django.contrib import admin
+from .models import Post
+
+admin.site.register(Post)
+------------------------------------------
+
+刷新http://127.0.0.1:8000/admin/即可以看到Post可以修改了
+
+
+
+
+
+
+
+
+
+
+
