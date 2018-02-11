@@ -122,6 +122,7 @@ class Mutation(ObjectType):
     create_postcate = CreatePostcate.Field()
     login = Login.Field()
 
+
 class Query(ObjectType):
     # 使用Relay方式可以非常简便地创建创建cate/cates/post/posts查询
     cate = relay.Node.Field(PostcateNode)

@@ -93,8 +93,8 @@ class Postcate(models.Model):
         verbose_name = '文章类别'
         verbose_name_plural = '管理文章类别'
 
-    # def __str__(self):
-    #     return self.cate_title
+    def __str__(self):
+        return self.cate_title
 
 class Postimg(models.Model):
     author = models.ForeignKey(User, on_delete=models.CASCADE, null=True, blank=True)
