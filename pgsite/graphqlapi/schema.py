@@ -16,6 +16,10 @@ from pgsite.mainsite.models import Config, Slide, Profile, Postcate, Postimg, Po
 
 import django_filters
 
+import rest_framework
+from rest_framework.permissions import IsAuthenticated
+from rest_framework.decorators import authentication_classes, permission_classes, api_view
+from rest_framework.settings import api_settings
 # --------------------------------------------------------------
 
 # Plain方式创建PostcateType
@@ -118,6 +122,7 @@ class CreatePostcate(Mutation):
         postcate = Postcate.objects.create(author_id=1, cate_title=input['cate_title'], cate_name=input['cate_name'], parent_id=input['parent_id'])
         return CreatePostcate(postcate=postcate, form_errors=None)
 
+
 class Mutation(ObjectType):
     create_postcate = CreatePostcate.Field()
     login = Login.Field()
@@ -131,7 +136,7 @@ class Query(ObjectType):
     posts = DjangoFilterConnectionField(PostNode)
 
     # 过滤
-    def resolve_posts(self, info):
-        return Post.objects.filter(post_isopen=1)
+    # def resolve_posts(self, info):
+    #     return Post.objects.filter(post_isopen=1)
 
 

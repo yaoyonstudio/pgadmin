@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50505
 File Encoding         : 65001
 
-Date: 2018-02-09 18:34:48
+Date: 2018-02-12 18:50:58
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -124,11 +124,12 @@ CREATE TABLE `auth_user` (
   `date_joined` datetime(6) NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `username` (`username`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4;
 
 -- ----------------------------
 -- Records of auth_user
 -- ----------------------------
+INSERT INTO `auth_user` VALUES ('1', 'pbkdf2_sha256$100000$AAXSFXPvhGV9$XGlgjaWpSRYzRD4CTXB+eqbup2rUDmVs9Nd+hxmRGCg=', '2018-02-11 01:00:16.172544', '1', 'yaoyon', '', '', 'yaoyonstudio@gmail.com', '1', '1', '2018-02-11 01:00:00.358528');
 
 -- ----------------------------
 -- Table structure for `auth_user_groups`
@@ -186,11 +187,21 @@ CREATE TABLE `django_admin_log` (
   KEY `django_admin_log_user_id_c564eba6_fk` (`user_id`),
   CONSTRAINT `django_admin_log_content_type_id_c4bce8eb_fk_django_co` FOREIGN KEY (`content_type_id`) REFERENCES `django_content_type` (`id`),
   CONSTRAINT `django_admin_log_user_id_c564eba6_fk` FOREIGN KEY (`user_id`) REFERENCES `auth_user` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8mb4;
 
 -- ----------------------------
 -- Records of django_admin_log
 -- ----------------------------
+INSERT INTO `django_admin_log` VALUES ('1', '2018-02-11 01:01:40.800791', '1', 'Postcate object (1)', '1', '[{\"added\": {}}]', '15', '1');
+INSERT INTO `django_admin_log` VALUES ('2', '2018-02-11 01:02:13.333377', '2', '文学', '1', '[{\"added\": {}}]', '15', '1');
+INSERT INTO `django_admin_log` VALUES ('3', '2018-02-11 01:02:31.791087', '3', '财经', '1', '[{\"added\": {}}]', '15', '1');
+INSERT INTO `django_admin_log` VALUES ('4', '2018-02-11 01:02:39.241664', '4', '股票', '1', '[{\"added\": {}}]', '15', '1');
+INSERT INTO `django_admin_log` VALUES ('5', '2018-02-11 01:03:40.320466', '1', '一个新文章', '1', '[{\"added\": {}}]', '14', '1');
+INSERT INTO `django_admin_log` VALUES ('6', '2018-02-11 01:03:54.504855', '2', '测试另一个文章', '1', '[{\"added\": {}}]', '14', '1');
+INSERT INTO `django_admin_log` VALUES ('7', '2018-02-12 07:32:42.323695', '3', '111111', '1', '[{\"added\": {}}]', '14', '1');
+INSERT INTO `django_admin_log` VALUES ('8', '2018-02-12 07:32:53.139310', '4', '222222', '1', '[{\"added\": {}}]', '14', '1');
+INSERT INTO `django_admin_log` VALUES ('9', '2018-02-12 07:33:04.971362', '5', '333333333', '1', '[{\"added\": {}}]', '14', '1');
+INSERT INTO `django_admin_log` VALUES ('10', '2018-02-12 07:33:23.996495', '6', '44444444444444444', '1', '[{\"added\": {}}]', '14', '1');
 
 -- ----------------------------
 -- Table structure for `django_content_type`
@@ -202,7 +213,7 @@ CREATE TABLE `django_content_type` (
   `model` varchar(100) NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `django_content_type_app_label_model_76bd3d3b_uniq` (`app_label`,`model`)
-) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=16 DEFAULT CHARSET=utf8mb4;
 
 -- ----------------------------
 -- Records of django_content_type
@@ -212,6 +223,8 @@ INSERT INTO `django_content_type` VALUES ('5', 'auth', 'group');
 INSERT INTO `django_content_type` VALUES ('4', 'auth', 'permission');
 INSERT INTO `django_content_type` VALUES ('6', 'auth', 'user');
 INSERT INTO `django_content_type` VALUES ('7', 'contenttypes', 'contenttype');
+INSERT INTO `django_content_type` VALUES ('14', 'mainsite', 'post');
+INSERT INTO `django_content_type` VALUES ('15', 'mainsite', 'postcate');
 INSERT INTO `django_content_type` VALUES ('9', 'pinkgirl', 'comment');
 INSERT INTO `django_content_type` VALUES ('10', 'pinkgirl', 'config');
 INSERT INTO `django_content_type` VALUES ('11', 'pinkgirl', 'customer');
@@ -271,170 +284,176 @@ CREATE TABLE `django_session` (
 -- ----------------------------
 -- Records of django_session
 -- ----------------------------
+INSERT INTO `django_session` VALUES ('tdygb62x7ezpjypr6n5oa1nv35x0dze1', 'OTI0NjUwOTU3OGE1YTA5ZmE3ZjE5ZWE0MDIzYzRjZjA2NDBmOTI5Zjp7Il9hdXRoX3VzZXJfaWQiOiIxIiwiX2F1dGhfdXNlcl9iYWNrZW5kIjoiZGphbmdvLmNvbnRyaWIuYXV0aC5iYWNrZW5kcy5Nb2RlbEJhY2tlbmQiLCJfYXV0aF91c2VyX2hhc2giOiJmNDcxNjYzZjEwOTRhNTVhNmNlOTEzZGExN2Q4YTBmYjU1NTRkM2E5In0=', '2018-02-25 01:00:16.195560');
 
 -- ----------------------------
--- Table structure for `pinkgirl_comment`
+-- Table structure for `mainsite_comment`
 -- ----------------------------
-DROP TABLE IF EXISTS `pinkgirl_comment`;
-CREATE TABLE `pinkgirl_comment` (
+DROP TABLE IF EXISTS `mainsite_comment`;
+CREATE TABLE `mainsite_comment` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `comment_content` longtext NOT NULL,
-  `comment_isopen` varchar(1) NOT NULL,
+  `comment_isopen` tinyint(1) NOT NULL,
   `comment_thumbup` int(11) NOT NULL,
   `comment_thumbdown` int(11) NOT NULL,
   `create_time` datetime(6) NOT NULL,
   `update_time` datetime(6) NOT NULL,
-  `customer_id` int(11) DEFAULT NULL,
+  `author_id` int(11) DEFAULT NULL,
   `post_id` int(11) DEFAULT NULL,
   PRIMARY KEY (`id`),
-  KEY `pinkgirl_comment_customer_id_20f65764_fk_pinkgirl_customer_id` (`customer_id`),
-  KEY `pinkgirl_comment_post_id_06230b93_fk_pinkgirl_post_id` (`post_id`),
-  CONSTRAINT `pinkgirl_comment_customer_id_20f65764_fk_pinkgirl_customer_id` FOREIGN KEY (`customer_id`) REFERENCES `pinkgirl_customer` (`id`),
-  CONSTRAINT `pinkgirl_comment_post_id_06230b93_fk_pinkgirl_post_id` FOREIGN KEY (`post_id`) REFERENCES `pinkgirl_post` (`id`)
+  KEY `mainsite_comment_author_id_3806d459_fk_auth_user_id` (`author_id`),
+  KEY `mainsite_comment_post_id_888ff927_fk_mainsite_post_id` (`post_id`),
+  CONSTRAINT `mainsite_comment_author_id_3806d459_fk_auth_user_id` FOREIGN KEY (`author_id`) REFERENCES `auth_user` (`id`),
+  CONSTRAINT `mainsite_comment_post_id_888ff927_fk_mainsite_post_id` FOREIGN KEY (`post_id`) REFERENCES `mainsite_post` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- ----------------------------
--- Records of pinkgirl_comment
+-- Records of mainsite_comment
 -- ----------------------------
 
 -- ----------------------------
--- Table structure for `pinkgirl_config`
+-- Table structure for `mainsite_config`
 -- ----------------------------
-DROP TABLE IF EXISTS `pinkgirl_config`;
-CREATE TABLE `pinkgirl_config` (
+DROP TABLE IF EXISTS `mainsite_config`;
+CREATE TABLE `mainsite_config` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `config_key` varchar(255) NOT NULL,
   `config_value` longtext NOT NULL,
-  `config_desc` varchar(255) NOT NULL,
+  `config_desc` varchar(255) DEFAULT NULL,
   `create_time` datetime(6) NOT NULL,
   `update_time` datetime(6) NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- ----------------------------
--- Records of pinkgirl_config
+-- Records of mainsite_config
 -- ----------------------------
 
 -- ----------------------------
--- Table structure for `pinkgirl_customer`
+-- Table structure for `mainsite_post`
 -- ----------------------------
-DROP TABLE IF EXISTS `pinkgirl_customer`;
-CREATE TABLE `pinkgirl_customer` (
+DROP TABLE IF EXISTS `mainsite_post`;
+CREATE TABLE `mainsite_post` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `customer_name` varchar(20) NOT NULL,
-  `customer_firstname` varchar(20) NOT NULL,
-  `customer_lastname` varchar(20) NOT NULL,
-  `customer_nickname` varchar(20) NOT NULL,
-  `customer_email` varchar(255) NOT NULL,
-  `customer_avatar` varchar(255) NOT NULL,
-  `customer_address` varchar(255) NOT NULL,
-  `customer_token` varchar(255) NOT NULL,
-  `customer_openid` varchar(255) NOT NULL,
-  `customer_qq` varchar(20) NOT NULL,
-  `customer_mobile` varchar(20) NOT NULL,
-  `customer_active` varchar(1) NOT NULL,
-  `customer_sex` varchar(1) NOT NULL,
-  `customer_ip` varchar(30) NOT NULL,
-  `customer_password` varchar(255) NOT NULL,
-  `create_birthday` date NOT NULL,
-  `customer_lastlogin` datetime(6) NOT NULL,
-  `create_time` datetime(6) NOT NULL,
-  `update_time` datetime(6) NOT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
-
--- ----------------------------
--- Records of pinkgirl_customer
--- ----------------------------
-
--- ----------------------------
--- Table structure for `pinkgirl_post`
--- ----------------------------
-DROP TABLE IF EXISTS `pinkgirl_post`;
-CREATE TABLE `pinkgirl_post` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `featuredimg` varchar(100) DEFAULT NULL,
   `post_title` varchar(255) NOT NULL,
-  `post_description` longtext NOT NULL,
-  `post_source` varchar(255) NOT NULL,
-  `post_sourcelink` varchar(255) NOT NULL,
+  `post_description` longtext,
+  `post_source` varchar(255) DEFAULT NULL,
+  `post_sourcelink` varchar(255) DEFAULT NULL,
   `post_hits` int(11) NOT NULL,
   `post_thumbup` int(11) NOT NULL,
   `post_thumbdown` int(11) NOT NULL,
-  `post_keywords` longtext NOT NULL,
+  `post_keywords` varchar(255) DEFAULT NULL,
   `post_content` longtext NOT NULL,
-  `post_isopen` varchar(1) NOT NULL,
-  `post_isrecommend` varchar(1) NOT NULL,
+  `post_isopen` tinyint(1) NOT NULL,
+  `post_isrecommend` tinyint(1) NOT NULL,
   `create_time` datetime(6) NOT NULL,
   `update_time` datetime(6) NOT NULL,
-  `cate_id` int(11) DEFAULT NULL,
   `author_id` int(11) DEFAULT NULL,
-  `featuredimg_id` int(11) DEFAULT NULL,
+  `cate_id` int(11) DEFAULT NULL,
   PRIMARY KEY (`id`),
-  KEY `pinkgirl_post_cate_id_b686c005_fk_pinkgirl_postcate_id` (`cate_id`),
-  KEY `pinkgirl_post_author_id_7717677a_fk_auth_user_id` (`author_id`),
-  KEY `pinkgirl_post_featuredimg_id_a07c5285_fk_pinkgirl_postimg_id` (`featuredimg_id`),
-  CONSTRAINT `pinkgirl_post_author_id_7717677a_fk_auth_user_id` FOREIGN KEY (`author_id`) REFERENCES `auth_user` (`id`),
-  CONSTRAINT `pinkgirl_post_cate_id_b686c005_fk_pinkgirl_postcate_id` FOREIGN KEY (`cate_id`) REFERENCES `pinkgirl_postcate` (`id`),
-  CONSTRAINT `pinkgirl_post_featuredimg_id_a07c5285_fk_pinkgirl_postimg_id` FOREIGN KEY (`featuredimg_id`) REFERENCES `pinkgirl_postimg` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+  KEY `mainsite_post_author_id_3d99e2aa_fk_auth_user_id` (`author_id`),
+  KEY `mainsite_post_cate_id_7cadbfb4_fk_mainsite_postcate_id` (`cate_id`),
+  CONSTRAINT `mainsite_post_author_id_3d99e2aa_fk_auth_user_id` FOREIGN KEY (`author_id`) REFERENCES `auth_user` (`id`),
+  CONSTRAINT `mainsite_post_cate_id_7cadbfb4_fk_mainsite_postcate_id` FOREIGN KEY (`cate_id`) REFERENCES `mainsite_postcate` (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb4;
 
 -- ----------------------------
--- Records of pinkgirl_post
+-- Records of mainsite_post
 -- ----------------------------
+INSERT INTO `mainsite_post` VALUES ('1', 'featured/2018/02/11/80X80.jpg', '一个新文章', '一个新文章', '腾讯', 'http://www.qq.com', '0', '0', '0', '新文章', '<p>一个新文章一个新文章一个新文章一个新文章</p>', '1', '0', '2018-02-11 01:03:40.291452', '2018-02-11 01:03:40.291452', '1', '1');
+INSERT INTO `mainsite_post` VALUES ('2', 'featured/2018/02/11/240X240.jpg', '测试另一个文章', '测试文章', '新浪网', 'http://www.sina.com.cn', '0', '0', '0', '测试文章', '<p>测试文章测试文章</p>', '1', '0', '2018-02-11 01:03:54.486828', '2018-02-11 01:03:54.486828', '1', '2');
+INSERT INTO `mainsite_post` VALUES ('3', 'featured/2018/02/12/60X60.jpg', '111111', '1111111111111111', '腾讯', 'http://www.qq.com', '0', '0', '0', '111111', '<p>111111</p>', '0', '0', '2018-02-12 07:32:42.234217', '2018-02-12 07:32:42.234217', '1', '3');
+INSERT INTO `mainsite_post` VALUES ('4', 'featured/2018/02/12/180X180.jpg', '222222', '222222222222222', '新浪网', 'http://www.qq.com', '0', '0', '0', '2222222222222', '<p>22222222</p>', '1', '0', '2018-02-12 07:32:53.123802', '2018-02-12 07:32:53.123802', '1', '2');
+INSERT INTO `mainsite_post` VALUES ('5', 'featured/2018/02/12/240X240.jpg', '333333333', '3333333333333333', '新浪网', 'http://www.qq.com', '0', '0', '0', '333333333333', '<p>3333333333333333333</p>', '1', '0', '2018-02-12 07:33:04.957785', '2018-02-12 07:33:04.957785', '1', '4');
+INSERT INTO `mainsite_post` VALUES ('6', 'featured/2018/02/12/480X320.jpg', '44444444444444444', '444444', '新浪网', 'http://www.qq.com', '0', '0', '0', '44444444', '<p>44444444</p>', '1', '0', '2018-02-12 07:33:23.985987', '2018-02-12 07:33:23.985987', '1', '3');
 
 -- ----------------------------
--- Table structure for `pinkgirl_postcate`
+-- Table structure for `mainsite_postcate`
 -- ----------------------------
-DROP TABLE IF EXISTS `pinkgirl_postcate`;
-CREATE TABLE `pinkgirl_postcate` (
+DROP TABLE IF EXISTS `mainsite_postcate`;
+CREATE TABLE `mainsite_postcate` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `cate_title` varchar(255) NOT NULL,
   `cate_name` varchar(255) NOT NULL,
+  `create_time` datetime(6) NOT NULL,
+  `update_time` datetime(6) NOT NULL,
+  `author_id` int(11) DEFAULT NULL,
   `parent_id` int(11) DEFAULT NULL,
-  `create_time` datetime(6) NOT NULL,
-  `update_time` datetime(6) NOT NULL,
-  `author_id` int(11) DEFAULT NULL,
   PRIMARY KEY (`id`),
-  KEY `pinkgirl_postcate_parent_id_id_cd39c1ec` (`parent_id`),
-  KEY `pinkgirl_postcate_author_id_01986567_fk_auth_user_id` (`author_id`),
-  CONSTRAINT `pinkgirl_postcate_author_id_01986567_fk_auth_user_id` FOREIGN KEY (`author_id`) REFERENCES `auth_user` (`id`),
-  CONSTRAINT `pinkgirl_postcate_parent_id_84ab763f_fk_pinkgirl_postcate_id` FOREIGN KEY (`parent_id`) REFERENCES `pinkgirl_postcate` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+  KEY `mainsite_postcate_author_id_b83b03a2_fk_auth_user_id` (`author_id`),
+  KEY `mainsite_postcate_parent_id_4978e7a0_fk_mainsite_postcate_id` (`parent_id`),
+  CONSTRAINT `mainsite_postcate_author_id_b83b03a2_fk_auth_user_id` FOREIGN KEY (`author_id`) REFERENCES `auth_user` (`id`),
+  CONSTRAINT `mainsite_postcate_parent_id_4978e7a0_fk_mainsite_postcate_id` FOREIGN KEY (`parent_id`) REFERENCES `mainsite_postcate` (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4;
 
 -- ----------------------------
--- Records of pinkgirl_postcate
+-- Records of mainsite_postcate
 -- ----------------------------
+INSERT INTO `mainsite_postcate` VALUES ('1', '科学', 'tech', '2018-02-11 01:01:40.779762', '2018-02-11 01:01:40.779762', '1', null);
+INSERT INTO `mainsite_postcate` VALUES ('2', '文学', 'Literature', '2018-02-11 01:02:13.312371', '2018-02-11 01:02:13.313372', '1', null);
+INSERT INTO `mainsite_postcate` VALUES ('3', '财经', 'finance', '2018-02-11 01:02:31.778078', '2018-02-11 01:02:31.778078', '1', null);
+INSERT INTO `mainsite_postcate` VALUES ('4', '股票', 'stock', '2018-02-11 01:02:39.227653', '2018-02-11 01:02:39.227653', '1', '3');
 
 -- ----------------------------
--- Table structure for `pinkgirl_postimg`
+-- Table structure for `mainsite_postimg`
 -- ----------------------------
-DROP TABLE IF EXISTS `pinkgirl_postimg`;
-CREATE TABLE `pinkgirl_postimg` (
+DROP TABLE IF EXISTS `mainsite_postimg`;
+CREATE TABLE `mainsite_postimg` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `img_title` varchar(255) NOT NULL,
-  `img_thumburl` varchar(255) NOT NULL,
-  `img_commonurl` varchar(255) NOT NULL,
-  `img_originurl` varchar(255) NOT NULL,
+  `img_title` varchar(255) DEFAULT NULL,
+  `img` varchar(255) DEFAULT NULL,
+  `img_thumburl` varchar(255) DEFAULT NULL,
+  `img_commonurl` varchar(255) DEFAULT NULL,
+  `img_originurl` varchar(255) DEFAULT NULL,
   `create_time` datetime(6) NOT NULL,
   `update_time` datetime(6) NOT NULL,
   `author_id` int(11) DEFAULT NULL,
   PRIMARY KEY (`id`),
-  KEY `pinkgirl_postimg_author_id_486374eb_fk_auth_user_id` (`author_id`),
-  CONSTRAINT `pinkgirl_postimg_author_id_486374eb_fk_auth_user_id` FOREIGN KEY (`author_id`) REFERENCES `auth_user` (`id`)
+  KEY `mainsite_postimg_author_id_e44cc412_fk_auth_user_id` (`author_id`),
+  CONSTRAINT `mainsite_postimg_author_id_e44cc412_fk_auth_user_id` FOREIGN KEY (`author_id`) REFERENCES `auth_user` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- ----------------------------
--- Records of pinkgirl_postimg
+-- Records of mainsite_postimg
 -- ----------------------------
 
 -- ----------------------------
--- Table structure for `pinkgirl_slide`
+-- Table structure for `mainsite_profile`
 -- ----------------------------
-DROP TABLE IF EXISTS `pinkgirl_slide`;
-CREATE TABLE `pinkgirl_slide` (
+DROP TABLE IF EXISTS `mainsite_profile`;
+CREATE TABLE `mainsite_profile` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `nickname` varchar(20) DEFAULT NULL,
+  `avatar` varchar(255) DEFAULT NULL,
+  `address` varchar(255) DEFAULT NULL,
+  `token` varchar(255) DEFAULT NULL,
+  `openid` varchar(255) DEFAULT NULL,
+  `qq` varchar(20) DEFAULT NULL,
+  `mobile` varchar(20) DEFAULT NULL,
+  `sex` tinyint(1) NOT NULL,
+  `ip` char(39) DEFAULT NULL,
+  `birthday` date DEFAULT NULL,
+  `create_time` datetime(6) NOT NULL,
+  `update_time` datetime(6) NOT NULL,
+  `user_id` int(11) NOT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `user_id` (`user_id`),
+  CONSTRAINT `mainsite_profile_user_id_1126090b_fk_auth_user_id` FOREIGN KEY (`user_id`) REFERENCES `auth_user` (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- ----------------------------
+-- Records of mainsite_profile
+-- ----------------------------
+
+-- ----------------------------
+-- Table structure for `mainsite_slide`
+-- ----------------------------
+DROP TABLE IF EXISTS `mainsite_slide`;
+CREATE TABLE `mainsite_slide` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `slide_title` varchar(255) NOT NULL,
-  `slide_link` varchar(255) NOT NULL,
+  `slide_link` varchar(255) DEFAULT NULL,
   `slide_img` varchar(255) NOT NULL,
   `create_time` datetime(6) NOT NULL,
   `update_time` datetime(6) NOT NULL,
@@ -442,5 +461,5 @@ CREATE TABLE `pinkgirl_slide` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- ----------------------------
--- Records of pinkgirl_slide
+-- Records of mainsite_slide
 -- ----------------------------
