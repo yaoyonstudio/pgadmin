@@ -1,3 +1,8 @@
+import jwt, time
+import pgsite.settings
+
+from .auth import identify
+
 # 不使用Relay(Plain)
 import graphene
 from graphene_django.types import DjangoObjectType
@@ -61,13 +66,58 @@ class UserNode(DjangoObjectType):
     class Meta:
         model = User
         only_fields = ['id', 'last_login', 'username', 'email', 'profile']
+        filter_fields = []
         interfaces = (relay.Node,)
 
-class ProfileNode(DjangoObjectType):
+    @classmethod
+    def get_node(cls, info, id):
+        print('id:', id)
+        authorization = info.context.META['HTTP_AUTHORIZATION']
+        authRst = identify(authorization)
+        print('authorization:', authorization)
+
+        if (authRst['code'] == 100 and authRst['payload'] and 'user_id' in authRst['payload'] and authRst['payload']['user_id']):
+            user_id = authRst['payload']['user_id']
+            user = cls._meta.model.objects.get(pk=user_id)
+            if (user):
+                return user
+            else:
+                # can't find the user
+                return None
+        else:
+            # something authenticate error
+            return None
+
+
+
+class ProfileType(DjangoObjectType):
     class Meta:
         model = Profile
-        exclude_fields = ['token', 'openid', 'mobile']
+
+# class ProfileNode(DjangoObjectType):
+#     class Meta:
+#         model = Profile
+#         filter_fields = []
+#         interfaces = (relay.Node,)
+#
+
+class InfoNode(DjangoObjectType):
+    class Meta:
+        model = Profile
+        only_fields = ['token', 'openid', 'mobile', 'user']
+        filter_fields = []
         interfaces = (relay.Node,)
+
+    @classmethod
+    def get_node(cls, info, id):
+        print('cls:', cls)
+        try:
+            profile = Profile.objects.get(id=id)
+            return profile
+        except cls._meta.model.DoesNotExist:
+            return None
+
+
 
 class Login(Mutation):
     user = graphene.Field(UserNode)
@@ -105,6 +155,7 @@ class PostNode(DjangoObjectType):
         }
         interfaces = (relay.Node,)
 
+
 class CreatePostcate(Mutation):
     class Arguments:
         cate_title = graphene.String()
@@ -134,6 +185,33 @@ class Query(ObjectType):
     cates = DjangoFilterConnectionField(PostcateNode)
     post = relay.Node.Field(PostNode)
     posts = DjangoFilterConnectionField(PostNode)
+    user = relay.Node.Field(UserNode)
+    # profiles = DjangoFilterConnectionField(ProfileNode)
+    # profile = relay.Node.Field(ProfileNode)
+
+    profile = graphene.Field(ProfileType)
+    def resolve_profile(self, info, **kwargs):
+        # print('info:', info)
+        # print('user:', info.context.user)
+        # print('HTTP_AUTHORIZATION:', info.context.META['HTTP_AUTHORIZATION'])
+        # print('kwargs:', kwargs)
+        authorization = info.context.META['HTTP_AUTHORIZATION']
+        authRst = identify(authorization)
+        print(authRst)
+        if (authRst['code'] == 100 and authRst['payload'] and 'user_id' in authRst['payload'] and authRst['payload']['user_id']):
+            user_id = authRst['payload']['user_id']
+            user = Profile.objects.get(pk=user_id)
+            if (user):
+                return user
+            else:
+                # 找不到正确用户信息
+                return None
+        else:
+            # 出现各种错误
+            return None
+
+
+
 
     # 过滤
     # def resolve_posts(self, info):
