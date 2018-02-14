@@ -7,9 +7,7 @@ from . import  views
 
 urlpatterns = format_suffix_patterns([
     path('restapi/', views.api_root),
-    path('test', views.test),
-    path('posts/', views.PostList.as_view(), name='post-list'),
-    path('posts/<int:pk>/', views.PostDetail.as_view(), name='post-detail'),
-    path('posts/<int:pk>/highlight/', views.PostHighlight.as_view(), name='post-highlight'),
+    path('restapi/posts/', views.PostList.as_view(), name='post-list'),
+    path('restapi/posts/<int:pk>/', views.PostDetail.as_view(), name='post-detail'),
+    path('restapi/posts/<int:pk>/highlight/', views.PostHighlight.as_view(), name='post-highlight'),
 ])
-# urlpatterns = format_suffix_patterns(urlpatterns)
