@@ -179,6 +179,7 @@ class Mutation(ObjectType):
     login = Login.Field()
 
 
+
 class Query(ObjectType):
     # 使用Relay方式可以非常简便地创建创建cate/cates/post/posts查询
     cate = relay.Node.Field(PostcateNode)
@@ -190,6 +191,7 @@ class Query(ObjectType):
     # profile = relay.Node.Field(ProfileNode)
 
     profile = graphene.Field(ProfileType)
+
     def resolve_profile(self, info, **kwargs):
         # print('info:', info)
         # print('user:', info.context.user)
@@ -198,17 +200,20 @@ class Query(ObjectType):
         authorization = info.context.META['HTTP_AUTHORIZATION']
         authRst = identify(authorization)
         print(authRst)
-        if (authRst['code'] == 100 and authRst['payload'] and 'user_id' in authRst['payload'] and authRst['payload']['user_id']):
+        if (authRst['code'] == 100 and authRst['payload'] and 'user_id' in authRst['payload'] and authRst['payload'][
+            'user_id']):
             user_id = authRst['payload']['user_id']
             user = Profile.objects.get(pk=user_id)
             if (user):
+                # raise Exception('ddd')
                 return user
             else:
                 # 找不到正确用户信息
                 return None
         else:
             # 出现各种错误
-            return None
+            raise Exception(authRst)
+            # return None
 
 
 

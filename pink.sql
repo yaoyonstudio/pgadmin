@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50505
 File Encoding         : 65001
 
-Date: 2018-02-12 18:50:58
+Date: 2018-02-14 11:43:05
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -129,7 +129,7 @@ CREATE TABLE `auth_user` (
 -- ----------------------------
 -- Records of auth_user
 -- ----------------------------
-INSERT INTO `auth_user` VALUES ('1', 'pbkdf2_sha256$100000$AAXSFXPvhGV9$XGlgjaWpSRYzRD4CTXB+eqbup2rUDmVs9Nd+hxmRGCg=', '2018-02-11 01:00:16.172544', '1', 'yaoyon', '', '', 'yaoyonstudio@gmail.com', '1', '1', '2018-02-11 01:00:00.358528');
+INSERT INTO `auth_user` VALUES ('1', 'pbkdf2_sha256$100000$AAXSFXPvhGV9$XGlgjaWpSRYzRD4CTXB+eqbup2rUDmVs9Nd+hxmRGCg=', '2018-02-13 08:52:27.842879', '1', 'yaoyon', '', '', 'yaoyonstudio@gmail.com', '1', '1', '2018-02-11 01:00:00.358528');
 
 -- ----------------------------
 -- Table structure for `auth_user_groups`
@@ -187,7 +187,7 @@ CREATE TABLE `django_admin_log` (
   KEY `django_admin_log_user_id_c564eba6_fk` (`user_id`),
   CONSTRAINT `django_admin_log_content_type_id_c4bce8eb_fk_django_co` FOREIGN KEY (`content_type_id`) REFERENCES `django_content_type` (`id`),
   CONSTRAINT `django_admin_log_user_id_c564eba6_fk` FOREIGN KEY (`user_id`) REFERENCES `auth_user` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=utf8mb4;
 
 -- ----------------------------
 -- Records of django_admin_log
@@ -202,6 +202,7 @@ INSERT INTO `django_admin_log` VALUES ('7', '2018-02-12 07:32:42.323695', '3', '
 INSERT INTO `django_admin_log` VALUES ('8', '2018-02-12 07:32:53.139310', '4', '222222', '1', '[{\"added\": {}}]', '14', '1');
 INSERT INTO `django_admin_log` VALUES ('9', '2018-02-12 07:33:04.971362', '5', '333333333', '1', '[{\"added\": {}}]', '14', '1');
 INSERT INTO `django_admin_log` VALUES ('10', '2018-02-12 07:33:23.996495', '6', '44444444444444444', '1', '[{\"added\": {}}]', '14', '1');
+INSERT INTO `django_admin_log` VALUES ('11', '2018-02-13 03:18:23.004961', '1', 'ken', '1', '[{\"added\": {}}]', '16', '1');
 
 -- ----------------------------
 -- Table structure for `django_content_type`
@@ -213,7 +214,7 @@ CREATE TABLE `django_content_type` (
   `model` varchar(100) NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `django_content_type_app_label_model_76bd3d3b_uniq` (`app_label`,`model`)
-) ENGINE=InnoDB AUTO_INCREMENT=16 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=17 DEFAULT CHARSET=utf8mb4;
 
 -- ----------------------------
 -- Records of django_content_type
@@ -225,6 +226,7 @@ INSERT INTO `django_content_type` VALUES ('6', 'auth', 'user');
 INSERT INTO `django_content_type` VALUES ('7', 'contenttypes', 'contenttype');
 INSERT INTO `django_content_type` VALUES ('14', 'mainsite', 'post');
 INSERT INTO `django_content_type` VALUES ('15', 'mainsite', 'postcate');
+INSERT INTO `django_content_type` VALUES ('16', 'mainsite', 'profile');
 INSERT INTO `django_content_type` VALUES ('9', 'pinkgirl', 'comment');
 INSERT INTO `django_content_type` VALUES ('10', 'pinkgirl', 'config');
 INSERT INTO `django_content_type` VALUES ('11', 'pinkgirl', 'customer');
@@ -284,6 +286,7 @@ CREATE TABLE `django_session` (
 -- ----------------------------
 -- Records of django_session
 -- ----------------------------
+INSERT INTO `django_session` VALUES ('evvkz17h92f3bc1ytoijw68mcn7w463c', 'OTI0NjUwOTU3OGE1YTA5ZmE3ZjE5ZWE0MDIzYzRjZjA2NDBmOTI5Zjp7Il9hdXRoX3VzZXJfaWQiOiIxIiwiX2F1dGhfdXNlcl9iYWNrZW5kIjoiZGphbmdvLmNvbnRyaWIuYXV0aC5iYWNrZW5kcy5Nb2RlbEJhY2tlbmQiLCJfYXV0aF91c2VyX2hhc2giOiJmNDcxNjYzZjEwOTRhNTVhNmNlOTEzZGExN2Q4YTBmYjU1NTRkM2E5In0=', '2018-02-27 08:52:27.932885');
 INSERT INTO `django_session` VALUES ('tdygb62x7ezpjypr6n5oa1nv35x0dze1', 'OTI0NjUwOTU3OGE1YTA5ZmE3ZjE5ZWE0MDIzYzRjZjA2NDBmOTI5Zjp7Il9hdXRoX3VzZXJfaWQiOiIxIiwiX2F1dGhfdXNlcl9iYWNrZW5kIjoiZGphbmdvLmNvbnRyaWIuYXV0aC5iYWNrZW5kcy5Nb2RlbEJhY2tlbmQiLCJfYXV0aF91c2VyX2hhc2giOiJmNDcxNjYzZjEwOTRhNTVhNmNlOTEzZGExN2Q4YTBmYjU1NTRkM2E5In0=', '2018-02-25 01:00:16.195560');
 
 -- ----------------------------
@@ -356,17 +359,53 @@ CREATE TABLE `mainsite_post` (
   KEY `mainsite_post_cate_id_7cadbfb4_fk_mainsite_postcate_id` (`cate_id`),
   CONSTRAINT `mainsite_post_author_id_3d99e2aa_fk_auth_user_id` FOREIGN KEY (`author_id`) REFERENCES `auth_user` (`id`),
   CONSTRAINT `mainsite_post_cate_id_7cadbfb4_fk_mainsite_postcate_id` FOREIGN KEY (`cate_id`) REFERENCES `mainsite_postcate` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=43 DEFAULT CHARSET=utf8mb4;
 
 -- ----------------------------
 -- Records of mainsite_post
 -- ----------------------------
-INSERT INTO `mainsite_post` VALUES ('1', 'featured/2018/02/11/80X80.jpg', '一个新文章', '一个新文章', '腾讯', 'http://www.qq.com', '0', '0', '0', '新文章', '<p>一个新文章一个新文章一个新文章一个新文章</p>', '1', '0', '2018-02-11 01:03:40.291452', '2018-02-11 01:03:40.291452', '1', '1');
-INSERT INTO `mainsite_post` VALUES ('2', 'featured/2018/02/11/240X240.jpg', '测试另一个文章', '测试文章', '新浪网', 'http://www.sina.com.cn', '0', '0', '0', '测试文章', '<p>测试文章测试文章</p>', '1', '0', '2018-02-11 01:03:54.486828', '2018-02-11 01:03:54.486828', '1', '2');
-INSERT INTO `mainsite_post` VALUES ('3', 'featured/2018/02/12/60X60.jpg', '111111', '1111111111111111', '腾讯', 'http://www.qq.com', '0', '0', '0', '111111', '<p>111111</p>', '0', '0', '2018-02-12 07:32:42.234217', '2018-02-12 07:32:42.234217', '1', '3');
-INSERT INTO `mainsite_post` VALUES ('4', 'featured/2018/02/12/180X180.jpg', '222222', '222222222222222', '新浪网', 'http://www.qq.com', '0', '0', '0', '2222222222222', '<p>22222222</p>', '1', '0', '2018-02-12 07:32:53.123802', '2018-02-12 07:32:53.123802', '1', '2');
-INSERT INTO `mainsite_post` VALUES ('5', 'featured/2018/02/12/240X240.jpg', '333333333', '3333333333333333', '新浪网', 'http://www.qq.com', '0', '0', '0', '333333333333', '<p>3333333333333333333</p>', '1', '0', '2018-02-12 07:33:04.957785', '2018-02-12 07:33:04.957785', '1', '4');
-INSERT INTO `mainsite_post` VALUES ('6', 'featured/2018/02/12/480X320.jpg', '44444444444444444', '444444', '新浪网', 'http://www.qq.com', '0', '0', '0', '44444444', '<p>44444444</p>', '1', '0', '2018-02-12 07:33:23.985987', '2018-02-12 07:33:23.985987', '1', '3');
+INSERT INTO `mainsite_post` VALUES ('1', 'featured/2018/02/11/80X80.jpg', '一个文章1', '一个文章1', '腾讯', 'http://www.qq.com', '0', '0', '0', '新文章', '<p>一个新文章一个新文章一个新文章一个新文章</p>', '1', '0', '2018-02-11 01:03:40.291452', '2018-02-11 01:03:40.291452', '1', '1');
+INSERT INTO `mainsite_post` VALUES ('2', 'featured/2018/02/11/240X240.jpg', '一个文章2', '一个文章2', '新浪网', 'http://www.sina.com.cn', '0', '0', '0', '测试文章', '<p>测试文章测试文章</p>', '1', '0', '2018-02-11 01:03:54.486828', '2018-02-11 01:03:54.486828', '1', '2');
+INSERT INTO `mainsite_post` VALUES ('3', 'featured/2018/02/12/60X60.jpg', '一个文章3', '一个文章3', '腾讯', 'http://www.qq.com', '0', '0', '0', '111111', '<p>111111</p>', '0', '0', '2018-02-12 07:32:42.234217', '2018-02-12 07:32:42.234217', '1', '3');
+INSERT INTO `mainsite_post` VALUES ('4', 'featured/2018/02/12/180X180.jpg', '一个文章4', '一个文章4', '新浪网', 'http://www.qq.com', '0', '0', '0', '2222222222222', '<p>22222222</p>', '1', '0', '2018-02-12 07:32:53.123802', '2018-02-12 07:32:53.123802', '1', '2');
+INSERT INTO `mainsite_post` VALUES ('5', 'featured/2018/02/12/240X240.jpg', '一个文章5', '一个文章5', '新浪网', 'http://www.qq.com', '0', '0', '0', '333333333333', '<p>3333333333333333333</p>', '1', '0', '2018-02-12 07:33:04.957785', '2018-02-12 07:33:04.957785', '1', '4');
+INSERT INTO `mainsite_post` VALUES ('6', 'featured/2018/02/12/480X320.jpg', '一个文章6', '一个文章6', '新浪网', 'http://www.qq.com', '0', '0', '0', '44444444', '<p>44444444</p>', '1', '0', '2018-02-12 07:33:23.985987', '2018-02-12 07:33:23.985987', '1', '3');
+INSERT INTO `mainsite_post` VALUES ('7', 'featured/2018/02/11/80X80.jpg', '一个文章7', '一个文章7', '腾讯', 'http://www.qq.com', '0', '0', '0', '新文章', '<p>一个新文章一个新文章一个新文章一个新文章</p>', '1', '0', '2018-02-11 01:03:40.291452', '2018-02-11 01:03:40.291452', '1', '1');
+INSERT INTO `mainsite_post` VALUES ('8', 'featured/2018/02/11/240X240.jpg', '一个文章8', '一个文章8', '新浪网', 'http://www.sina.com.cn', '0', '0', '0', '测试文章', '<p>测试文章测试文章</p>', '1', '0', '2018-02-11 01:03:54.486828', '2018-02-11 01:03:54.486828', '1', '2');
+INSERT INTO `mainsite_post` VALUES ('9', 'featured/2018/02/12/60X60.jpg', '一个文章9', '一个文章9', '腾讯', 'http://www.qq.com', '0', '0', '0', '111111', '<p>111111</p>', '0', '0', '2018-02-12 07:32:42.234217', '2018-02-12 07:32:42.234217', '1', '3');
+INSERT INTO `mainsite_post` VALUES ('10', 'featured/2018/02/12/180X180.jpg', '一个文章10', '一个文章10', '新浪网', 'http://www.qq.com', '0', '0', '0', '2222222222222', '<p>22222222</p>', '1', '0', '2018-02-12 07:32:53.123802', '2018-02-12 07:32:53.123802', '1', '2');
+INSERT INTO `mainsite_post` VALUES ('11', 'featured/2018/02/12/240X240.jpg', '一个文章11', '一个文章11', '新浪网', 'http://www.qq.com', '0', '0', '0', '333333333333', '<p>3333333333333333333</p>', '1', '0', '2018-02-12 07:33:04.957785', '2018-02-12 07:33:04.957785', '1', '4');
+INSERT INTO `mainsite_post` VALUES ('12', 'featured/2018/02/12/480X320.jpg', '一个文章12', '一个文章12', '新浪网', 'http://www.qq.com', '0', '0', '0', '44444444', '<p>44444444</p>', '1', '0', '2018-02-12 07:33:23.985987', '2018-02-12 07:33:23.985987', '1', '3');
+INSERT INTO `mainsite_post` VALUES ('13', 'featured/2018/02/11/80X80.jpg', '一个文章13', '一个文章13', '腾讯', 'http://www.qq.com', '0', '0', '0', '新文章', '<p>一个新文章一个新文章一个新文章一个新文章</p>', '1', '0', '2018-02-11 01:03:40.291452', '2018-02-11 01:03:40.291452', '1', '1');
+INSERT INTO `mainsite_post` VALUES ('14', 'featured/2018/02/11/240X240.jpg', '一个文章14', '一个文章14', '新浪网', 'http://www.sina.com.cn', '0', '0', '0', '测试文章', '<p>测试文章测试文章</p>', '1', '0', '2018-02-11 01:03:54.486828', '2018-02-11 01:03:54.486828', '1', '2');
+INSERT INTO `mainsite_post` VALUES ('15', 'featured/2018/02/12/60X60.jpg', '一个文章15', '一个文章15', '腾讯', 'http://www.qq.com', '0', '0', '0', '111111', '<p>111111</p>', '0', '0', '2018-02-12 07:32:42.234217', '2018-02-12 07:32:42.234217', '1', '3');
+INSERT INTO `mainsite_post` VALUES ('16', 'featured/2018/02/12/180X180.jpg', '一个文章16', '一个文章16', '新浪网', 'http://www.qq.com', '0', '0', '0', '2222222222222', '<p>22222222</p>', '1', '0', '2018-02-12 07:32:53.123802', '2018-02-12 07:32:53.123802', '1', '2');
+INSERT INTO `mainsite_post` VALUES ('17', 'featured/2018/02/12/240X240.jpg', '一个文章17', '一个文章17', '新浪网', 'http://www.qq.com', '0', '0', '0', '333333333333', '<p>3333333333333333333</p>', '1', '0', '2018-02-12 07:33:04.957785', '2018-02-12 07:33:04.957785', '1', '4');
+INSERT INTO `mainsite_post` VALUES ('18', 'featured/2018/02/12/480X320.jpg', '一个文章18', '一个文章18', '新浪网', 'http://www.qq.com', '0', '0', '0', '44444444', '<p>44444444</p>', '1', '0', '2018-02-12 07:33:23.985987', '2018-02-12 07:33:23.985987', '1', '3');
+INSERT INTO `mainsite_post` VALUES ('19', 'featured/2018/02/11/80X80.jpg', '一个文章19', '一个文章19', '腾讯', 'http://www.qq.com', '0', '0', '0', '新文章', '<p>一个新文章一个新文章一个新文章一个新文章</p>', '1', '0', '2018-02-11 01:03:40.291452', '2018-02-11 01:03:40.291452', '1', '1');
+INSERT INTO `mainsite_post` VALUES ('20', 'featured/2018/02/11/240X240.jpg', '一个文章20', '一个文章20', '新浪网', 'http://www.sina.com.cn', '0', '0', '0', '测试文章', '<p>测试文章测试文章</p>', '1', '0', '2018-02-11 01:03:54.486828', '2018-02-11 01:03:54.486828', '1', '2');
+INSERT INTO `mainsite_post` VALUES ('21', 'featured/2018/02/12/60X60.jpg', '一个文章21', '一个文章21', '腾讯', 'http://www.qq.com', '0', '0', '0', '111111', '<p>111111</p>', '0', '0', '2018-02-12 07:32:42.234217', '2018-02-12 07:32:42.234217', '1', '3');
+INSERT INTO `mainsite_post` VALUES ('22', 'featured/2018/02/12/180X180.jpg', '一个文章22', '一个文章22', '新浪网', 'http://www.qq.com', '0', '0', '0', '2222222222222', '<p>22222222</p>', '1', '0', '2018-02-12 07:32:53.123802', '2018-02-12 07:32:53.123802', '1', '2');
+INSERT INTO `mainsite_post` VALUES ('23', 'featured/2018/02/12/240X240.jpg', '一个文章23', '一个文章23', '新浪网', 'http://www.qq.com', '0', '0', '0', '333333333333', '<p>3333333333333333333</p>', '1', '0', '2018-02-12 07:33:04.957785', '2018-02-12 07:33:04.957785', '1', '4');
+INSERT INTO `mainsite_post` VALUES ('24', 'featured/2018/02/12/480X320.jpg', '一个文章24', '一个文章24', '新浪网', 'http://www.qq.com', '0', '0', '0', '44444444', '<p>44444444</p>', '1', '0', '2018-02-12 07:33:23.985987', '2018-02-12 07:33:23.985987', '1', '3');
+INSERT INTO `mainsite_post` VALUES ('25', 'featured/2018/02/11/80X80.jpg', '一个文章25', '一个文章25', '腾讯', 'http://www.qq.com', '0', '0', '0', '新文章', '<p>一个新文章一个新文章一个新文章一个新文章</p>', '1', '0', '2018-02-11 01:03:40.291452', '2018-02-11 01:03:40.291452', '1', '1');
+INSERT INTO `mainsite_post` VALUES ('26', 'featured/2018/02/11/240X240.jpg', '一个文章26', '一个文章26', '新浪网', 'http://www.sina.com.cn', '0', '0', '0', '测试文章', '<p>测试文章测试文章</p>', '1', '0', '2018-02-11 01:03:54.486828', '2018-02-11 01:03:54.486828', '1', '2');
+INSERT INTO `mainsite_post` VALUES ('27', 'featured/2018/02/12/60X60.jpg', '一个文章27', '一个文章27', '腾讯', 'http://www.qq.com', '0', '0', '0', '111111', '<p>111111</p>', '0', '0', '2018-02-12 07:32:42.234217', '2018-02-12 07:32:42.234217', '1', '3');
+INSERT INTO `mainsite_post` VALUES ('28', 'featured/2018/02/12/180X180.jpg', '一个文章28', '一个文章28', '新浪网', 'http://www.qq.com', '0', '0', '0', '2222222222222', '<p>22222222</p>', '1', '0', '2018-02-12 07:32:53.123802', '2018-02-12 07:32:53.123802', '1', '2');
+INSERT INTO `mainsite_post` VALUES ('29', 'featured/2018/02/12/240X240.jpg', '一个文章29', '一个文章29', '新浪网', 'http://www.qq.com', '0', '0', '0', '333333333333', '<p>3333333333333333333</p>', '1', '0', '2018-02-12 07:33:04.957785', '2018-02-12 07:33:04.957785', '1', '4');
+INSERT INTO `mainsite_post` VALUES ('30', 'featured/2018/02/12/480X320.jpg', '一个文章30', '一个文章30', '新浪网', 'http://www.qq.com', '0', '0', '0', '44444444', '<p>44444444</p>', '1', '0', '2018-02-12 07:33:23.985987', '2018-02-12 07:33:23.985987', '1', '3');
+INSERT INTO `mainsite_post` VALUES ('31', 'featured/2018/02/11/80X80.jpg', '一个文章31', '一个文章31', '腾讯', 'http://www.qq.com', '0', '0', '0', '新文章', '<p>一个新文章一个新文章一个新文章一个新文章</p>', '1', '0', '2018-02-11 01:03:40.291452', '2018-02-11 01:03:40.291452', '1', '1');
+INSERT INTO `mainsite_post` VALUES ('32', 'featured/2018/02/11/240X240.jpg', '一个文章32', '一个文章32', '新浪网', 'http://www.sina.com.cn', '0', '0', '0', '测试文章', '<p>测试文章测试文章</p>', '1', '0', '2018-02-11 01:03:54.486828', '2018-02-11 01:03:54.486828', '1', '2');
+INSERT INTO `mainsite_post` VALUES ('33', 'featured/2018/02/12/60X60.jpg', '一个文章33', '一个文章33', '腾讯', 'http://www.qq.com', '0', '0', '0', '111111', '<p>111111</p>', '0', '0', '2018-02-12 07:32:42.234217', '2018-02-12 07:32:42.234217', '1', '3');
+INSERT INTO `mainsite_post` VALUES ('34', 'featured/2018/02/12/180X180.jpg', '一个文章34', '一个文章34', '新浪网', 'http://www.qq.com', '0', '0', '0', '2222222222222', '<p>22222222</p>', '1', '0', '2018-02-12 07:32:53.123802', '2018-02-12 07:32:53.123802', '1', '2');
+INSERT INTO `mainsite_post` VALUES ('35', 'featured/2018/02/12/240X240.jpg', '一个文章35', '一个文章35', '新浪网', 'http://www.qq.com', '0', '0', '0', '333333333333', '<p>3333333333333333333</p>', '1', '0', '2018-02-12 07:33:04.957785', '2018-02-12 07:33:04.957785', '1', '4');
+INSERT INTO `mainsite_post` VALUES ('36', 'featured/2018/02/12/480X320.jpg', '一个文章36', '一个文章36', '新浪网', 'http://www.qq.com', '0', '0', '0', '44444444', '<p>44444444</p>', '1', '0', '2018-02-12 07:33:23.985987', '2018-02-12 07:33:23.985987', '1', '3');
+INSERT INTO `mainsite_post` VALUES ('37', 'featured/2018/02/11/80X80.jpg', '一个文章37', '一个文章37', '腾讯', 'http://www.qq.com', '0', '0', '0', '新文章', '<p>一个新文章一个新文章一个新文章一个新文章</p>', '1', '0', '2018-02-11 01:03:40.291452', '2018-02-11 01:03:40.291452', '1', '1');
+INSERT INTO `mainsite_post` VALUES ('38', 'featured/2018/02/11/240X240.jpg', '一个文章38', '一个文章38', '新浪网', 'http://www.sina.com.cn', '0', '0', '0', '测试文章', '<p>测试文章测试文章</p>', '1', '0', '2018-02-11 01:03:54.486828', '2018-02-11 01:03:54.486828', '1', '2');
+INSERT INTO `mainsite_post` VALUES ('39', 'featured/2018/02/12/60X60.jpg', '一个文章39', '一个文章39', '腾讯', 'http://www.qq.com', '0', '0', '0', '111111', '<p>111111</p>', '0', '0', '2018-02-12 07:32:42.234217', '2018-02-12 07:32:42.234217', '1', '3');
+INSERT INTO `mainsite_post` VALUES ('40', 'featured/2018/02/12/180X180.jpg', '一个文章40', '一个文章40', '新浪网', 'http://www.qq.com', '0', '0', '0', '2222222222222', '<p>22222222</p>', '1', '0', '2018-02-12 07:32:53.123802', '2018-02-12 07:32:53.123802', '1', '2');
+INSERT INTO `mainsite_post` VALUES ('41', 'featured/2018/02/12/240X240.jpg', '一个文章41', '一个文章41', '新浪网', 'http://www.qq.com', '0', '0', '0', '333333333333', '<p>3333333333333333333</p>', '1', '0', '2018-02-12 07:33:04.957785', '2018-02-12 07:33:04.957785', '1', '4');
+INSERT INTO `mainsite_post` VALUES ('42', 'featured/2018/02/12/480X320.jpg', '一个文章42', '一个文章42', '新浪网', 'http://www.qq.com', '0', '0', '0', '44444444', '<p>44444444</p>', '1', '0', '2018-02-12 07:33:23.985987', '2018-02-12 07:33:23.985987', '1', '3');
 
 -- ----------------------------
 -- Table structure for `mainsite_postcate`
@@ -440,11 +479,12 @@ CREATE TABLE `mainsite_profile` (
   PRIMARY KEY (`id`),
   UNIQUE KEY `user_id` (`user_id`),
   CONSTRAINT `mainsite_profile_user_id_1126090b_fk_auth_user_id` FOREIGN KEY (`user_id`) REFERENCES `auth_user` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4;
 
 -- ----------------------------
 -- Records of mainsite_profile
 -- ----------------------------
+INSERT INTO `mainsite_profile` VALUES ('1', 'ken', 'avatar.png', '东莞南城', null, null, '403749023', '13800138000', '1', null, '2018-02-08', '2018-02-13 03:18:22.991952', '2018-02-13 03:18:22.991952', '1');
 
 -- ----------------------------
 -- Table structure for `mainsite_slide`
