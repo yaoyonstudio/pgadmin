@@ -3,5 +3,8 @@ venv/
 .user.ini
 pgsite/__pycache__/
 pgsite/graphqlapi/__pycache__/
+pgsite/graphqlapi/migrations/
 pgsite/mainsite/__pycache__/
+pgsite/mainsite/migrations/
 pgsite/restapi/__pycache__/
+pgsite/restapi/migrations/
