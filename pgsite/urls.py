@@ -20,7 +20,10 @@ from rest_framework_jwt.views import obtain_jwt_token
 from rest_framework_jwt.views import refresh_jwt_token
 from rest_framework_jwt.views import verify_jwt_token
 
+from pgsite.mainsite import views
+
 urlpatterns = [
+    path('', views.index, name = 'index'),
     path('admin/', admin.site.urls),
     path('', include('pgsite.mainsite.urls')),
     path('', include('pgsite.graphqlapi.urls')),

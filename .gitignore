@@ -1,3 +1,7 @@
 venv/
 .idea/
 .user.ini
+pgsite/__pycache__/
+pgsite/graphqlapi/__pycache__/
+pgsite/mainsite/__pycache__/
+pgsite/restapi/__pycache__/
