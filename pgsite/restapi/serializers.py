@@ -4,14 +4,37 @@ from django.contrib.auth.models import User
 from django.contrib.auth import authenticate
 from pgsite.mainsite.models import Config, Slide, Profile, Postcate, Postimg, Post, Comment, IS_OPEN_CHOICES, IS_RECOMMEND_CHOICES
 
+
+
+
+
+class PostcateSerializer(serializers.HyperlinkedModelSerializer):
+    owner = serializers.ReadOnlyField(source='owner.username')
+    highlight = serializers.HyperlinkedIdentityField(view_name='postcate-highlight', format='html')
+    class Meta:
+        model = Postcate
+        fields = ('id', 'author_id', 'url', 'highlight', 'owner', 'cate_name', 'cate_title', 'parent')
+
+    def create(self, validated_data):
+        return Postcate.objects.create(**validated_data)
+
+    def update(self, instance, validated_data):
+        instance.cate_name = validated_data.get('cate_name', instance.cate_name)
+        instance.cate_title = validated_data.get('cate_title', instance.cate_title)
+        instance.parent_id = validated_data.get('parent_id', instance.parent_id)
+        instance.save()
+        return instance
+
+
 # class PostSerializer(serializers.Serializer):
 class PostSerializer(serializers.HyperlinkedModelSerializer):
     owner = serializers.ReadOnlyField(source='owner.username')
     highlight = serializers.HyperlinkedIdentityField(view_name='post-highlight', format='html')
-    print('highlight:', highlight)
+    cate = PostcateSerializer(read_only=True)
+
     class Meta:
         model = Post
-        fields = ('id', 'author_id', 'cate_id', 'url', 'highlight', 'owner', 'post_title', 'post_description', 'post_keywords', 'post_content', 'post_source', 'post_sourcelink', 'featuredimg', 'post_isopen', 'post_isrecommend')
+        fields = ('id', 'author_id', 'cate_id', 'cate', 'url', 'highlight', 'owner', 'post_title', 'post_description', 'post_keywords', 'post_content', 'post_source', 'post_sourcelink', 'featuredimg', 'post_isopen', 'post_isrecommend')
 
     def create(self, validated_data):
         return Post.objects.create(**validated_data)

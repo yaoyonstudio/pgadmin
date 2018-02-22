@@ -26,7 +26,14 @@ SECRET_KEY = 'v-gm0)dex$ubmhv8=_rg4)ftf5k!lyjnm)s1_jd*&p$qtvl6w9'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+# ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['127.0.0.1', 'localhost', 'pgadmin.thatyou.cn', 'pink.thatyou.cn']
+
+# SSL
+# SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
+# SECURE_SSL_REDIRECT = True
+# SESSION_COOKIE_SECURE = True
+# CSRF_COOKIE_SECURE = True
 
 
 # Application definition
@@ -51,7 +58,10 @@ INSTALLED_APPS = [
 CORS_ORIGIN_ALLOW_ALL = True
 CORS_ORIGIN_WHITELIST = (
     '127.0.0.1:8888',
+    '127.0.0.1:8008',
     'localhost:2222',
+    'pgadmin.thatyou.cn',
+    'pink.thatyou.cn',
 )
 
 # Graphene Schema 配置

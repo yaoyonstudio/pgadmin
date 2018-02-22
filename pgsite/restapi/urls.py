@@ -7,7 +7,11 @@ from . import  views
 
 urlpatterns = format_suffix_patterns([
     path('', views.api_root),
-    path('test', views.test),
+
+    path('postcates/', views.PostcateList.as_view(), name='postcate-list'),
+    path('postcates/<int:pk>/', views.PostcateDetail.as_view(), name='postcate-detail'),
+    path('postcates/<int:pk>/highlight/', views.PostcateHighlight.as_view(), name='postcate-highlight'),
+
     path('posts/', views.PostList.as_view(), name='post-list'),
     path('posts/<int:pk>/', views.PostDetail.as_view(), name='post-detail'),
     path('posts/<int:pk>/highlight/', views.PostHighlight.as_view(), name='post-highlight'),
