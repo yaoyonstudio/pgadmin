@@ -8,6 +8,6 @@ from graphene_django.views import GraphQLView
 from . import  views
 
 urlpatterns = [
-    path('mainsite', views.index, name = 'mainsite.index'),
+    path('', views.index, name = 'mainsite.index'),
     path('ckeditor/', include('ckeditor_uploader.urls')),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
