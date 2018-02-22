@@ -16,4 +16,3 @@ urlpatterns = format_suffix_patterns([
     path('posts/<int:pk>/', views.PostDetail.as_view(), name='post-detail'),
     path('posts/<int:pk>/highlight/', views.PostHighlight.as_view(), name='post-highlight'),
 ])
-# urlpatterns = format_suffix_patterns(urlpatterns)
