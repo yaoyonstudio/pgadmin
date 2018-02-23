@@ -8,6 +8,10 @@ from . import  views
 urlpatterns = format_suffix_patterns([
     path('', views.api_root),
 
+    path('profiles/', views.ProfileList.as_view(), name='profile-list'),
+    path('profiles/<int:pk>/', views.ProfileDetail.as_view(), name='profile-detail'),
+    path('profiles/<int:pk>/highlight/', views.ProfileHighlight.as_view(), name='profile-highlight'),
+
     path('postcates/', views.PostcateList.as_view(), name='postcate-list'),
     path('postcates/<int:pk>/', views.PostcateDetail.as_view(), name='postcate-detail'),
     path('postcates/<int:pk>/highlight/', views.PostcateHighlight.as_view(), name='postcate-highlight'),

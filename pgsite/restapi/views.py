@@ -1,3 +1,6 @@
+from django_filters.rest_framework import DjangoFilterBackend
+from rest_framework import filters
+
 from django.shortcuts import render
 from django.views.decorators.csrf import csrf_exempt
 
@@ -11,15 +14,36 @@ from rest_framework.decorators import api_view
 from rest_framework.reverse import reverse
 
 from pgsite.mainsite.models import Config, Slide, Profile, Postcate, Postimg, Post, Comment, IS_OPEN_CHOICES, IS_RECOMMEND_CHOICES
-from pgsite.restapi.serializers import PostSerializer, PostcateSerializer
+from pgsite.restapi.serializers import PostSerializer, PostcateSerializer, ProfileSerializer
 
+from pgsite.restapi.filters import PostFilter
 
 @api_view(['GET'])
 def api_root(request, format=None):
     return Response({
         'posts': reverse('post-list', request=request, format=format),
         'postcates': reverse('postcate-list', request=request, format=format),
+        'profiles': reverse('profile-list', request=request, format=format),
     })
+
+class ProfileList(generics.ListCreateAPIView):
+    queryset = Profile.objects.all()
+    serializer_class = ProfileSerializer
+
+
+class ProfileDetail(generics.RetrieveAPIView):
+    queryset = Profile.objects.all()
+    serializer_class = ProfileSerializer
+
+
+class ProfileHighlight(generics.GenericAPIView):
+    queryset = Profile.objects.all()
+    renderer_classes = (renderers.StaticHTMLRenderer,)
+
+    def get(self, request, *args, **kwargs):
+        profile = self.get_object()
+        return Response(profile.nickname)
+
 
 
 class PostcateList(generics.ListCreateAPIView):
@@ -45,6 +69,12 @@ class PostcateHighlight(generics.GenericAPIView):
 class PostList(generics.ListCreateAPIView):
     queryset = Post.objects.all()
     serializer_class = PostSerializer
+    # 添加过滤和搜索
+    # 过滤：http://127.0.0.1:8888/restapi/posts/?cate_id=1
+    # 搜索：http://127.0.0.1:8888/restapi/posts/?search=关键词
+    filter_backends = (DjangoFilterBackend, filters.SearchFilter,)
+    filter_fields = ('cate_id',)
+    search_fields = ('post_title',)
 
 
 class PostDetail(generics.RetrieveUpdateDestroyAPIView):

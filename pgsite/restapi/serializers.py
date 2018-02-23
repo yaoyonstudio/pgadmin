@@ -1,11 +1,31 @@
 from rest_framework import serializers
+from rest_framework.renderers import JSONRenderer
+from django.utils.six import BytesIO
+from rest_framework.parsers import JSONParser
+
+import django_filters
+
+from django.core import serializers as django_serializers
+import json
+from django.forms.models import model_to_dict
 
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate
 from pgsite.mainsite.models import Config, Slide, Profile, Postcate, Postimg, Post, Comment, IS_OPEN_CHOICES, IS_RECOMMEND_CHOICES
 
 
+class ProfileSerializer(serializers.HyperlinkedModelSerializer):
+    owner = serializers.ReadOnlyField(source='owner.username')
+    highlight = serializers.HyperlinkedIdentityField(view_name='profile-highlight', format='html')
+    class Meta:
+        model = Profile
+        fields = ('id', 'nickname', 'avatar', 'url', 'highlight', 'owner',)
 
+
+class UserSerializer(serializers.Serializer):
+    class Meta:
+        model = User
+        fields = ('id', 'username')
 
 
 class PostcateSerializer(serializers.HyperlinkedModelSerializer):
@@ -13,7 +33,7 @@ class PostcateSerializer(serializers.HyperlinkedModelSerializer):
     highlight = serializers.HyperlinkedIdentityField(view_name='postcate-highlight', format='html')
     class Meta:
         model = Postcate
-        fields = ('id', 'author_id', 'url', 'highlight', 'owner', 'cate_name', 'cate_title', 'parent')
+        fields = ('id', 'author_id', 'cate_name', 'cate_title', 'parent', 'url', 'highlight', 'owner')
 
     def create(self, validated_data):
         return Postcate.objects.create(**validated_data)
@@ -30,11 +50,30 @@ class PostcateSerializer(serializers.HyperlinkedModelSerializer):
 class PostSerializer(serializers.HyperlinkedModelSerializer):
     owner = serializers.ReadOnlyField(source='owner.username')
     highlight = serializers.HyperlinkedIdentityField(view_name='post-highlight', format='html')
-    cate = PostcateSerializer(read_only=True)
 
     class Meta:
         model = Post
-        fields = ('id', 'author_id', 'cate_id', 'cate', 'url', 'highlight', 'owner', 'post_title', 'post_description', 'post_keywords', 'post_content', 'post_source', 'post_sourcelink', 'featuredimg', 'post_isopen', 'post_isrecommend')
+        fields = ('id', 'author_id', 'cate_id', 'cate_title', 'cate', 'author', 'post_title', 'post_description', 'post_keywords', 'post_content', 'post_source', 'post_sourcelink', 'featuredimg', 'post_isopen', 'post_isrecommend', 'url', 'highlight', 'owner')
+
+    cate = PostcateSerializer(read_only=True)
+
+    # 添加类别标题字段
+    cate_title = serializers.SerializerMethodField()
+    # 添加文章作者相关信息字段（username, nickname, avatar）
+    author = serializers.SerializerMethodField(read_only=True)
+
+    def get_cate_title(self, obj):
+        return obj.cate.cate_title
+
+    def get_author(self, obj):
+        profile = Profile.objects.get(user_id=obj.author_id)
+        stream = model_to_dict(profile)
+        profile_dict = {
+            'username': obj.author.username,
+            'nickname': stream['nickname'],
+            'avatar': stream['avatar'].url,
+        }
+        return profile_dict
 
     def create(self, validated_data):
         return Post.objects.create(**validated_data)

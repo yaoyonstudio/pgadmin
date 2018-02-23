@@ -29,7 +29,19 @@ class PostimgAdmin(admin.ModelAdmin):
     fields = ['img_title', 'img']
 
 class CommentAdmin(admin.ModelAdmin):
-    fields = ['comment_content', 'comment_isopen']
+    fields = ['comment_content', 'comment_isopen', 'post']
+
+    def get_readonly_fields(self, request, obj=None):
+        if obj:
+            print(obj)
+            return self.readonly_fields + tuple('post')
+        return self.readonly_fields
+
+    def save_model(self, request, obj, form, change):
+        if not change:
+            # the object is being created, so set the user
+            obj.author = request.user
+        obj.save()
 
 class ProfileAdmin(admin.ModelAdmin):
     fields = ['user', 'nickname', 'avatar', 'address', 'qq', 'mobile', 'sex', 'birthday']
