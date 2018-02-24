@@ -111,7 +111,7 @@ class ProfileType(DjangoObjectType):
 class InfoNode(DjangoObjectType):
     class Meta:
         model = Profile
-        only_fields = ['token', 'openid', 'mobile', 'user']
+        only_fields = ['token', 'openid', 'mobile', 'user', 'nickname', 'avatar']
         filter_fields = []
         interfaces = (relay.Node,)
 
@@ -165,6 +165,7 @@ class PostcateNode(DjangoObjectType):
 class CommentNode(DjangoObjectType):
     class Meta:
         model = Comment
+        filter_fields = []
         interfaces = (relay.Node,)
 
 
@@ -210,6 +211,8 @@ class Query(ObjectType):
     cates = DjangoFilterConnectionField(PostcateNode)
     post = relay.Node.Field(PostNode)
     posts = DjangoFilterConnectionField(PostNode)
+    comment = relay.Node.Field(CommentNode)
+    comments = DjangoFilterConnectionField(CommentNode)
     user = relay.Node.Field(UserNode)
     # profiles = DjangoFilterConnectionField(ProfileNode)
     # profile = relay.Node.Field(ProfileNode)
