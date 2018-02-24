@@ -28,6 +28,7 @@ class UserSerializer(serializers.Serializer):
         fields = ('id', 'username')
 
 
+
 class PostcateSerializer(serializers.HyperlinkedModelSerializer):
     owner = serializers.ReadOnlyField(source='owner.username')
     highlight = serializers.HyperlinkedIdentityField(view_name='postcate-highlight', format='html')
@@ -50,30 +51,52 @@ class PostcateSerializer(serializers.HyperlinkedModelSerializer):
 class PostSerializer(serializers.HyperlinkedModelSerializer):
     owner = serializers.ReadOnlyField(source='owner.username')
     highlight = serializers.HyperlinkedIdentityField(view_name='post-highlight', format='html')
+    cate = serializers.SlugRelatedField(queryset=Postcate.objects.all(), slug_field='id')
 
     class Meta:
         model = Post
-        fields = ('id', 'author_id', 'cate_id', 'cate_title', 'cate', 'author', 'post_title', 'post_description', 'post_keywords', 'post_content', 'post_source', 'post_sourcelink', 'featuredimg', 'post_isopen', 'post_isrecommend', 'url', 'highlight', 'owner')
-
-    cate = PostcateSerializer(read_only=True)
+        fields = ('id', 'author_id', 'cate_id', 'cate_title', 'cate', 'author', 'post_title', 'post_description', 'post_keywords', 'post_content', 'post_source', 'post_sourcelink', 'featuredimg', 'post_isopen', 'post_isrecommend', 'comments', 'url', 'highlight', 'owner')
+        read_only_fields = ('cates',)
 
     # 添加类别标题字段
     cate_title = serializers.SerializerMethodField()
+
     # 添加文章作者相关信息字段（username, nickname, avatar）
     author = serializers.SerializerMethodField(read_only=True)
+    comments = serializers.SerializerMethodField(read_only=True)
 
     def get_cate_title(self, obj):
         return obj.cate.cate_title
 
     def get_author(self, obj):
-        profile = Profile.objects.get(user_id=obj.author_id)
-        stream = model_to_dict(profile)
-        profile_dict = {
-            'username': obj.author.username,
-            'nickname': stream['nickname'],
-            'avatar': stream['avatar'].url,
-        }
-        return profile_dict
+        if obj.author_id:
+            profile = Profile.objects.get(user_id=obj.author_id)
+            if profile is not None:
+                stream = model_to_dict(profile)
+                profile_dict = {
+                    'author_id': stream['id'],
+                    'username': obj.author.username,
+                    'nickname': stream['nickname'],
+                    'avatar': stream['avatar'].url,
+                }
+                return profile_dict
+        else:
+            return ''
+
+    def get_comments(self, obj):
+        comments = Comment.objects.filter(post_id=obj.id)
+        comment_json = []
+        for item in comments:
+            comment_json.append({
+                'post_id': item.post_id,
+                'author_id': item.author_id,
+                'comment_content': item.comment_content,
+                'comment_isopen': item.comment_isopen,
+                'comment_thumbup': item.comment_thumbup,
+                'comment_thumbdown': item.comment_thumbdown,
+                'create_time': item.create_time,
+            })
+        return comment_json
 
     def create(self, validated_data):
         return Post.objects.create(**validated_data)
@@ -94,5 +117,24 @@ class PostSerializer(serializers.HyperlinkedModelSerializer):
 
 
 
+
+class CommentSerializer(serializers.HyperlinkedModelSerializer):
+    owner = serializers.ReadOnlyField(source='owner.username')
+    highlight = serializers.HyperlinkedIdentityField(view_name='comment-highlight', format='html')
+    post = serializers.SlugRelatedField(queryset=Post.objects.all(), slug_field='id')
+
+    class Meta:
+        model = Comment
+        fields = ('id', 'author_id', 'post_id', 'post', 'comment_content', 'comment_isopen', 'comment_thumbup', 'comment_thumbdown', 'create_time', 'url', 'highlight', 'owner',)
+        read_only_fields = ('post', 'comment_thumbup', 'comment_thumbdown',)
+
+    def create(self, validated_data):
+        return Comment.objects.create(**validated_data)
+
+    def update(self, instance, validated_data):
+        instance.comment_content = validated_data.get('comment_content', instance.comment_content)
+        instance.comment_isopen = validated_data.get('comment_isopen', instance.comment_isopen)
+        instance.save()
+        return instance
 
 

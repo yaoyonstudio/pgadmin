@@ -14,15 +14,15 @@ from rest_framework.decorators import api_view
 from rest_framework.reverse import reverse
 
 from pgsite.mainsite.models import Config, Slide, Profile, Postcate, Postimg, Post, Comment, IS_OPEN_CHOICES, IS_RECOMMEND_CHOICES
-from pgsite.restapi.serializers import PostSerializer, PostcateSerializer, ProfileSerializer
+from pgsite.restapi.serializers import PostSerializer, PostcateSerializer, CommentSerializer, ProfileSerializer
 
-from pgsite.restapi.filters import PostFilter
 
 @api_view(['GET'])
 def api_root(request, format=None):
     return Response({
         'posts': reverse('post-list', request=request, format=format),
         'postcates': reverse('postcate-list', request=request, format=format),
+        'comments': reverse('comment-list', request=request, format=format),
         'profiles': reverse('profile-list', request=request, format=format),
     })
 
@@ -46,9 +46,35 @@ class ProfileHighlight(generics.GenericAPIView):
 
 
 
+class CommentList(generics.ListCreateAPIView):
+    queryset = Comment.objects.all()
+    serializer_class = CommentSerializer
+
+    def perform_create(self, serializer):
+        serializer.save(author_id=self.request.user.id)
+
+
+class CommentDetail(generics.RetrieveUpdateDestroyAPIView):
+    queryset = Comment.objects.all()
+    serializer_class = CommentSerializer
+
+
+class CommentHighlight(generics.GenericAPIView):
+    queryset = Comment.objects.all()
+    renderer_classes = (renderers.StaticHTMLRenderer,)
+
+    def get(self, request, *args, **kwargs):
+        comment = self.get_object()
+        return Response(comment.comment_content)
+
+
+
 class PostcateList(generics.ListCreateAPIView):
     queryset = Postcate.objects.all()
     serializer_class = PostcateSerializer
+
+    def perform_create(self, serializer):
+        serializer.save(author_id=self.request.user.id)
 
 
 class PostcateDetail(generics.RetrieveUpdateDestroyAPIView):
@@ -75,6 +101,9 @@ class PostList(generics.ListCreateAPIView):
     filter_backends = (DjangoFilterBackend, filters.SearchFilter,)
     filter_fields = ('cate_id',)
     search_fields = ('post_title',)
+
+    def perform_create(self, serializer):
+        serializer.save(author_id=self.request.user.id)
 
 
 class PostDetail(generics.RetrieveUpdateDestroyAPIView):

@@ -25,6 +25,13 @@ import rest_framework
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.decorators import authentication_classes, permission_classes, api_view
 from rest_framework.settings import api_settings
+
+
+from rest_framework_jwt.settings import api_settings
+
+jwt_payload_handler = api_settings.JWT_PAYLOAD_HANDLER
+jwt_encode_handler = api_settings.JWT_ENCODE_HANDLER
+
 # --------------------------------------------------------------
 
 # Plain方式创建PostcateType
@@ -133,7 +140,18 @@ class Login(Mutation):
         if not user:
             raise Exception('Invalid username or password')
 
-        info.context.session['token'] = user.token
+        # 这里要生成token，并将token写入Profile表
+        payload = jwt_payload_handler(user)
+        token = jwt_encode_handler(payload)
+
+        # print('payload:', payload)
+        # print('token:', token)
+
+        profile = Profile.objects.get(user_id=user.id)
+        profile.token = token
+        profile.save()
+
+        # info.context.session['token'] = user.token
         return Login(user=user)
 
 
@@ -143,6 +161,12 @@ class PostcateNode(DjangoObjectType):
         model = Postcate
         filter_fields = ['cate_name', 'cate_title']
         interfaces = (relay.Node,)
+
+class CommentNode(DjangoObjectType):
+    class Meta:
+        model = Comment
+        interfaces = (relay.Node,)
+
 
 # 使用Relay创建PostNode
 class PostNode(DjangoObjectType):

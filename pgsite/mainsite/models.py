@@ -96,6 +96,7 @@ class Postcate(models.Model):
     def __str__(self):
         return self.cate_title
 
+
 class Postimg(models.Model):
     author = models.ForeignKey(User, on_delete=models.CASCADE, null=True, blank=True)
     img_title = models.CharField('标题', max_length=255, null=True)
@@ -112,7 +113,6 @@ class Postimg(models.Model):
 
     def __str__(self):
         return self.img_commonurl
-
 
 
 class Post(models.Model):
@@ -147,8 +147,8 @@ class Comment(models.Model):
     post = models.ForeignKey('Post', on_delete=models.CASCADE, null=True)
     comment_content = models.TextField('评论内容')
     comment_isopen = models.BooleanField('是否显示', choices=IS_OPEN_CHOICES, default=1)
-    comment_thumbup = models.IntegerField(default=0)
-    comment_thumbdown = models.IntegerField(default=0)
+    comment_thumbup = models.IntegerField('点赞数', default=0)
+    comment_thumbdown = models.IntegerField('点踩数', default=0)
     create_time = models.DateTimeField('发布日期', auto_now=True)
     update_time = models.DateTimeField('更新日期', auto_now=True)
 
@@ -158,3 +158,4 @@ class Comment(models.Model):
 
     def __str__(self):
         return self.comment_content
+
