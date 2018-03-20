@@ -4,6 +4,9 @@ from rest_framework import filters
 from django.shortcuts import render
 from django.views.decorators.csrf import csrf_exempt
 
+from rest_framework import viewsets
+from rest_framework.views import APIView
+
 from rest_framework import mixins
 from rest_framework import generics
 
@@ -14,7 +17,7 @@ from rest_framework.decorators import api_view
 from rest_framework.reverse import reverse
 
 from pgsite.mainsite.models import Config, Slide, Profile, Postcate, Postimg, Post, Comment, IS_OPEN_CHOICES, IS_RECOMMEND_CHOICES
-from pgsite.restapi.serializers import PostSerializer, PostcateSerializer, CommentSerializer, ProfileSerializer
+from pgsite.restapi.serializers import PostSerializer, PostcateSerializer, CommentSerializer, ProfileSerializer, SlideSerializer
 
 
 @api_view(['GET'])
@@ -24,7 +27,13 @@ def api_root(request, format=None):
         'postcates': reverse('postcate-list', request=request, format=format),
         'comments': reverse('comment-list', request=request, format=format),
         'profiles': reverse('profile-list', request=request, format=format),
+        'slides': reverse('slide-list', request=request, format=format),
     })
+
+class SlideList(viewsets.ReadOnlyModelViewSet):
+    queryset = Slide.objects.all()
+    serializer_class = SlideSerializer
+
 
 class ProfileList(generics.ListCreateAPIView):
     queryset = Profile.objects.all()

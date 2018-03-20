@@ -28,6 +28,16 @@ class PostimgAdmin(admin.ModelAdmin):
     exclude = ('author',)
     fields = ['img_title', 'img']
 
+    def save_model(self, request, obj, form, change):
+        if not change:
+            # the object is being created, so set the user
+            obj.author = request.user
+            # print('request:', request)
+            # print('obj:', obj)
+            # print('form:', form)
+        obj.save()
+
+
 class CommentAdmin(admin.ModelAdmin):
     fields = ['comment_content', 'comment_isopen', 'post']
 

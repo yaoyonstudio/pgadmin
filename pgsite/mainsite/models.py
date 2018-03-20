@@ -112,7 +112,7 @@ class Postimg(models.Model):
         verbose_name_plural = '管理文章图片'
 
     def __str__(self):
-        return self.img_commonurl
+        return self.img_title
 
 
 class Post(models.Model):

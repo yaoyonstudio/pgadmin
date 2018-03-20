@@ -23,4 +23,6 @@ urlpatterns = format_suffix_patterns([
     path('posts/', views.PostList.as_view(), name='post-list'),
     path('posts/<int:pk>/', views.PostDetail.as_view(), name='post-detail'),
     path('posts/<int:pk>/highlight/', views.PostHighlight.as_view(), name='post-highlight'),
+
+    path('slides/', views.SlideList.as_view({'get': 'list'}), name='slide-list'),
 ])

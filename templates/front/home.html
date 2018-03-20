@@ -1,0 +1,41 @@
+{% extends "front/common/base.html" %}
+{% load static %}
+{% block title %}Django Project{% endblock %}
+{% block mainContent %}
+
+<!-- slider start -->
+<!--<div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">-->
+  <!--<ol class="carousel-indicators">-->
+    <!--{% for slider in sliders %}-->
+      <!--<li data-target="#carouselExampleIndicators" data-slide-to="{{ forloop.counter0 }}" class="{% if forloop.counter == 1 %} active {% endif %}"></li>-->
+    <!--{% empty %}-->
+        <!--<li>没有数据</li>-->
+    <!--{% endfor %}-->
+  <!--</ol>-->
+  <!--<div class="carousel-inner" role="listbox">-->
+    <!--{% for slider in sliders %}-->
+        <!--<div class="carousel-item {% if forloop.counter == 1 %} active {% endif %}">-->
+            <!--<img src="/media/{{ slider.slide_src }}" alt="{{ slider.slide_title }}" style="width: 100%;" />-->
+            <!--<div class="carousel-caption d-none d-md-block">-->
+                <!--<h3>{{ slider.slide_title }}</h3>-->
+            <!--</div>-->
+        <!--</div>-->
+    <!--{% empty %}-->
+        <!--<li>没有数据</li>-->
+    <!--{% endfor %}-->
+  <!--</div>-->
+  <!--<a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">-->
+    <!--<span class="carousel-control-prev-icon" aria-hidden="true"></span>-->
+    <!--<span class="sr-only">Previous</span>-->
+  <!--</a>-->
+  <!--<a class="carousel-control-next" href="#carouselExampleIndicators" role="button" data-slide="next">-->
+    <!--<span class="carousel-control-next-icon" aria-hidden="true"></span>-->
+    <!--<span class="sr-only">Next</span>-->
+  <!--</a>-->
+<!--</div>-->
+<!-- slider end -->
+
+<script>
+    $('.carousel').carousel()
+</script>
+{% endblock %}

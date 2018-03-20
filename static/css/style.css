@@ -1,0 +1,68 @@
+* {
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    min-height: 100%;
+}
+
+.main {
+    margin-top: 12px;
+    margin-bottom: 84px;
+}
+
+.footer {
+    height: 72px;
+}
+
+.copyright {
+    height: 72px;
+    line-height: 72px;
+}
+
+.slide .carousel-item img {
+    height: 328px;
+}
+
+.featured {
+    margin: 20px 0;
+}
+.featured ul {
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+}
+.cardItem {
+    display: block;
+    flex: 1;
+    border: none;
+    text-align: center;
+}
+.cardItem:not(:last-child) {
+    margin-right: 1rem;
+}
+
+.cardItem img {
+    margin: 0 auto;
+    width: 118px;
+    height: 118px;
+}
+.cardItem .card-text {
+    margin-top: 10px;
+    text-align: center;
+    font-size: 18px;
+}
+
+.ad {
+
+}
+
+.ad_item {
+    margin-bottom: 10px;
+}
+
+.ad_item img {
+    width: 100%;
+}
+
