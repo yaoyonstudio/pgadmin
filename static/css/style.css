@@ -66,3 +66,50 @@ body {
     width: 100%;
 }
 
+
+.postList {
+    margin: 20px 0;
+}
+.postList ul {
+
+}
+.postList li {
+    list-style: none;
+    margin-bottom: 16px;
+}
+.postList li a {
+    display: flex;
+    flex-direction: row;
+    text-decoration: none;
+}
+.postList li:not(:last-child) {
+    border-bottom: 1px solid #eee;
+}
+.postList li img {
+    width: 200px;
+    height: 160px;
+    margin-right: 20px;
+}
+.postList li aside {
+    flex: 1;
+}
+.postList li h4 {
+
+}
+.postList li p {
+
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+

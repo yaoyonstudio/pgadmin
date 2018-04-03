@@ -24,6 +24,7 @@ from pgsite.mainsite import views
 
 urlpatterns = [
     path('', views.index, name = 'index'),
+    path('post/<int:id>/', views.post_detail, name = 'post_detail'),
     path('admin/', admin.site.urls),
     path('', include('pgsite.mainsite.urls')),
     path('', include('pgsite.graphqlapi.urls')),
