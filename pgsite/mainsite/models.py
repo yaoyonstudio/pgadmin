@@ -43,6 +43,7 @@ class Config(models.Model):
     def __str__(self):
         return self.config_key
 
+
 class Slide(models.Model):
     slide_title = models.CharField('标题', max_length=255)
     slide_link = models.URLField('链接地址', max_length=255, null=True)
@@ -56,6 +57,71 @@ class Slide(models.Model):
 
     def __str__(self):
         return self.slide_title
+
+
+class Service(models.Model):
+    service_title = models.CharField('标题', max_length=255)
+    service_desc = models.CharField('描述', max_length=255)
+    service_img = models.FileField('图标', max_length=255)
+    create_time = models.DateTimeField('发布日期', auto_now=True)
+    update_time = models.DateTimeField('更新日期', auto_now=True)
+
+    class Meta:
+        verbose_name = '服务项目'
+        verbose_name_plural = '服务项目'
+
+    def __str__(self):
+        return self.service_title
+
+
+class Timeline(models.Model):
+    timeline_title = models.CharField('时间轴标题', max_length=255)
+    timeline_desc = models.CharField('时间轴描述', max_length=255)
+    timeline_img = models.FileField('时间轴图标', max_length=255)
+    timeline_time = models.DateField('时间轴日期')
+
+    class Meta:
+        verbose_name = '时间轴'
+        verbose_name_plural = '时间轴'
+
+    def __str__(self):
+        return self.timeline_title
+
+
+
+
+class Teamer(models.Model):
+    Teamer_name = models.CharField('团队成员姓名', max_length=255)
+    Teamer_position = models.CharField('团队成员职位', max_length=255)
+    Teamer_desc = models.CharField('团队成员介绍', max_length=255)
+    Teamer_avatar = models.FileField('团队成员头像', max_length=255)
+    create_time = models.DateTimeField('发布日期', auto_now=True)
+    update_time = models.DateTimeField('更新日期', auto_now=True)
+
+    class Meta:
+        verbose_name = '团队成员'
+        verbose_name_plural = '团队成员'
+
+    def __str__(self):
+        return self.Teamer_name
+
+
+
+class Client(models.Model):
+    client_name = models.CharField('客户名称', max_length=255)
+    client_site = models.URLField('客户网址', max_length=255, null=True)
+    client_logo = models.FileField('客户LOGO', max_length=255)
+    client_desc = models.CharField('客户介绍介绍', max_length=255)
+    create_time = models.DateTimeField('发布日期', auto_now=True)
+    update_time = models.DateTimeField('更新日期', auto_now=True)
+
+    class Meta:
+        verbose_name = '客户'
+        verbose_name_plural = '客户'
+
+    def __str__(self):
+        return self.client_name
+
 
 
 class Profile(models.Model):

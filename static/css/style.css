@@ -100,8 +100,49 @@ body {
 
 }
 
+.mapContainer {
+    background-color: #fff;
+    padding: 1em;
+    border-radius: .4em;
+    margin-top: 1em;
+}
+.contact_info {
+    width: 100%;
+    padding: 0 .6em;
+}
+.contact_info h3{
+    font-weight: 600;
+    font-size: 3em;
+    color: #fff;
+    line-height: 60px;
+    background: url(../img/tel_icon.png) no-repeat left center;
+    background-size: 50px 50px;
+    padding-left: 60px;
+}
+.contact_info p {
+    font-size: 1.4em;
+    color: #fff;
+    line-height: 24px;
+}
 
 
+.wxcode {
+    display: none;
+    position: absolute; width: 108px; height: 108px; left: -34px; bottom: 50px; padding: .4em; background-color: #fed136; border-radius: .2em;
+}
+.wxcode::after {
+    content: '';
+    display: block;
+    width: 0;
+    height: 0;
+    border-width: 10px 10px 0;
+    border-style: solid;
+    border-color: #fed136 transparent transparent;
+    position: absolute;
+    bottom: -8px;
+    left: 50%;
+    margin-left: -10px;
+}
 
 
 

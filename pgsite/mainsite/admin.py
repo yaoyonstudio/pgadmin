@@ -2,7 +2,7 @@ from django.contrib import admin
 
 # Register your models here.
 from django.contrib import admin
-from .models import Config, Slide, Profile, Postcate, Postimg, Post, Comment
+from .models import Config, Slide, Service, Timeline, Teamer, Client, Profile, Postcate, Postimg, Post, Comment
 
 class PostcateAdmin(admin.ModelAdmin):
     exclude = ('author',)
@@ -64,6 +64,10 @@ class ProfileAdmin(admin.ModelAdmin):
 
 admin.site.register(Config)
 admin.site.register(Slide)
+admin.site.register(Service)
+admin.site.register(Timeline)
+admin.site.register(Teamer)
+admin.site.register(Client)
 admin.site.register(Profile, ProfileAdmin)
 admin.site.register(Postcate, PostcateAdmin)
 admin.site.register(Postimg, PostimgAdmin)

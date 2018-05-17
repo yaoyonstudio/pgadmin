@@ -1,234 +1,530 @@
 {% extends "front/common/base.html" %}
 {% load static %}
-{% block title %}Django Project{% endblock %}
+{% block title %}{{ config.site_name }}{% endblock %}
 {% block mainContent %}
 
 <!-- Navigation -->
-<nav class="navbar navbar-expand-lg navbar-light fixed-top" id="mainNav">
-<div class="container">
-<a class="navbar-brand js-scroll-trigger" href="#page-top">Start Bootstrap</a>
-<button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
-  <span class="navbar-toggler-icon"></span>
-</button>
-<div class="collapse navbar-collapse" id="navbarResponsive">
-  <ul class="navbar-nav ml-auto">
-    <li class="nav-item">
-      <a class="nav-link js-scroll-trigger" href="#about">About</a>
-    </li>
-    <li class="nav-item">
-      <a class="nav-link js-scroll-trigger" href="#services">Services</a>
-    </li>
-    <li class="nav-item">
-      <a class="nav-link js-scroll-trigger" href="#portfolio">Portfolio</a>
-    </li>
-    <li class="nav-item">
-      <a class="nav-link js-scroll-trigger" href="#contact">Contact</a>
-    </li>
-  </ul>
-</div>
-</div>
+<nav class="navbar navbar-expand-lg navbar-dark fixed-top" id="mainNav">
+  <div class="container">
+    <a class="navbar-brand js-scroll-trigger" href="#page-top">{{ config.site_name }}</a>
+    <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+      Menu
+      <i class="fa fa-bars"></i>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarResponsive">
+      <ul class="navbar-nav text-uppercase ml-auto">
+        <li class="nav-item">
+          <a class="nav-link js-scroll-trigger" href="#services">Services</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link js-scroll-trigger" href="#portfolio">Portfolio</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link js-scroll-trigger" href="#about">About</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link js-scroll-trigger" href="#team">Team</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link js-scroll-trigger" href="#contact">Contact</a>
+        </li>
+      </ul>
+    </div>
+  </div>
 </nav>
 
-<header class="masthead text-center text-white d-flex">
-<div class="container my-auto">
-<div class="row">
-  <div class="col-lg-10 mx-auto">
-    <h1 class="text-uppercase">
-      <strong>Your Favorite Source of Free Bootstrap Themes</strong>
-    </h1>
-    <hr>
+<!-- Header -->
+<header class="masthead">
+  <div class="container">
+    <div class="intro-text">
+      <div class="intro-lead-in">Welcome To Our Studio!</div>
+      <div class="intro-heading text-uppercase">It's Nice To Meet You</div>
+      <a class="btn btn-primary btn-xl text-uppercase js-scroll-trigger" href="#services">Tell Me More</a>
+    </div>
   </div>
-  <div class="col-lg-8 mx-auto">
-    <p class="text-faded mb-5">Start Bootstrap can help you build better websites using the Bootstrap CSS framework! Just download your template and start going, no strings attached!</p>
-    <a class="btn btn-primary btn-xl js-scroll-trigger" href="#about">Find Out More</a>
-  </div>
-</div>
-</div>
 </header>
 
-<section class="bg-primary" id="about">
-<div class="container">
-<div class="row">
-  <div class="col-lg-8 mx-auto text-center">
-    <h2 class="section-heading text-white">We've got what you need!</h2>
-    <hr class="light my-4">
-    <p class="text-faded mb-4">Start Bootstrap has everything you need to get your new website up and running in no time! All of the templates and themes on Start Bootstrap are open source, free to download, and easy to use. No strings attached!</p>
-    <a class="btn btn-light btn-xl js-scroll-trigger" href="#services">Get Started!</a>
-  </div>
-</div>
-</div>
-</section>
-
+<!-- Services -->
 <section id="services">
-<div class="container">
-<div class="row">
-  <div class="col-lg-12 text-center">
-    <h2 class="section-heading">At Your Service</h2>
-    <hr class="my-4">
-  </div>
-</div>
-</div>
-<div class="container">
-<div class="row">
-  <div class="col-lg-3 col-md-6 text-center">
-    <div class="service-box mt-5 mx-auto">
-      <i class="fa fa-4x fa-diamond text-primary mb-3 sr-icons"></i>
-      <h3 class="mb-3">Sturdy Templates</h3>
-      <p class="text-muted mb-0">Our templates are updated regularly so they don't break.</p>
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-12 text-center">
+        <h2 class="section-heading text-uppercase">Services</h2>
+        <h3 class="section-subheading text-muted">{{ config.site_service_desc }}</h3>
+      </div>
+    </div>
+    <div class="row text-center">
+      {% for service in services %}
+          <div class="col-md-3">
+            <span class="fa-stack fa-4x" style="background-color: #fed136; border-radius: .2em;">
+              <img src="/media/{{ service.service_img }}" alt="{{ service.service_title }}" style="height: 1.14em; vertical-align: top; margin-top: .43em;" />
+            </span>
+            <h4 class="service-heading">{{ service.service_title }}</h4>
+            <p class="text-muted">{{ service.service_desc }}</p>
+          </div>
+      {% empty %}
+          <div class="col-md-12">没有数据</div>
+      {% endfor %}
     </div>
   </div>
-  <div class="col-lg-3 col-md-6 text-center">
-    <div class="service-box mt-5 mx-auto">
-      <i class="fa fa-4x fa-paper-plane text-primary mb-3 sr-icons"></i>
-      <h3 class="mb-3">Ready to Ship</h3>
-      <p class="text-muted mb-0">You can use this theme as is, or you can make changes!</p>
-    </div>
-  </div>
-  <div class="col-lg-3 col-md-6 text-center">
-    <div class="service-box mt-5 mx-auto">
-      <i class="fa fa-4x fa-newspaper-o text-primary mb-3 sr-icons"></i>
-      <h3 class="mb-3">Up to Date</h3>
-      <p class="text-muted mb-0">We update dependencies to keep things fresh.</p>
-    </div>
-  </div>
-  <div class="col-lg-3 col-md-6 text-center">
-    <div class="service-box mt-5 mx-auto">
-      <i class="fa fa-4x fa-heart text-primary mb-3 sr-icons"></i>
-      <h3 class="mb-3">Made with Love</h3>
-      <p class="text-muted mb-0">You have to make your websites with love these days!</p>
-    </div>
-  </div>
-</div>
-</div>
 </section>
 
-<section class="p-0" id="portfolio">
-<div class="container-fluid p-0">
-<div class="row no-gutters popup-gallery">
-  <div class="col-lg-4 col-sm-6">
-    <a class="portfolio-box" href="img/portfolio/fullsize/1.jpg">
-      <img class="img-fluid" src="{% static 'img/portfolio/thumbnails/1.jpg' %}" alt="">
-      <div class="portfolio-box-caption">
-        <div class="portfolio-box-caption-content">
-          <div class="project-category text-faded">
-            Category
+<!-- Portfolio Grid -->
+<section class="bg-light" id="portfolio">
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-12 text-center">
+        <h2 class="section-heading text-uppercase">Portfolio</h2>
+        <h3 class="section-subheading text-muted">Lorem ipsum dolor sit amet consectetur.</h3>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-4 col-sm-6 portfolio-item">
+        <a class="portfolio-link" data-toggle="modal" href="#portfolioModal1">
+          <div class="portfolio-hover">
+            <div class="portfolio-hover-content">
+              <i class="fa fa-plus fa-3x"></i>
+            </div>
           </div>
-          <div class="project-name">
-            Project Name
-          </div>
+          <img class="img-fluid" src="{% static 'img/portfolio/01-thumbnail.jpg' %}" alt="">
+        </a>
+        <div class="portfolio-caption">
+          <h4>Threads</h4>
+          <p class="text-muted">Illustration</p>
         </div>
       </div>
-    </a>
-  </div>
-  <div class="col-lg-4 col-sm-6">
-    <a class="portfolio-box" href="img/portfolio/fullsize/2.jpg">
-      <img class="img-fluid" src="{% static 'img/portfolio/thumbnails/2.jpg' %}" alt="">
-      <div class="portfolio-box-caption">
-        <div class="portfolio-box-caption-content">
-          <div class="project-category text-faded">
-            Category
+      <div class="col-md-4 col-sm-6 portfolio-item">
+        <a class="portfolio-link" data-toggle="modal" href="#portfolioModal2">
+          <div class="portfolio-hover">
+            <div class="portfolio-hover-content">
+              <i class="fa fa-plus fa-3x"></i>
+            </div>
           </div>
-          <div class="project-name">
-            Project Name
-          </div>
+          <img class="img-fluid" src="{% static 'img/portfolio/02-thumbnail.jpg' %}" alt="">
+        </a>
+        <div class="portfolio-caption">
+          <h4>Explore</h4>
+          <p class="text-muted">Graphic Design</p>
         </div>
       </div>
-    </a>
-  </div>
-  <div class="col-lg-4 col-sm-6">
-    <a class="portfolio-box" href="img/portfolio/fullsize/3.jpg">
-      <img class="img-fluid" src="{% static 'img/portfolio/thumbnails/3.jpg' %}" alt="">
-      <div class="portfolio-box-caption">
-        <div class="portfolio-box-caption-content">
-          <div class="project-category text-faded">
-            Category
+      <div class="col-md-4 col-sm-6 portfolio-item">
+        <a class="portfolio-link" data-toggle="modal" href="#portfolioModal3">
+          <div class="portfolio-hover">
+            <div class="portfolio-hover-content">
+              <i class="fa fa-plus fa-3x"></i>
+            </div>
           </div>
-          <div class="project-name">
-            Project Name
-          </div>
+          <img class="img-fluid" src="{% static 'img/portfolio/03-thumbnail.jpg' %}" alt="">
+        </a>
+        <div class="portfolio-caption">
+          <h4>Finish</h4>
+          <p class="text-muted">Identity</p>
         </div>
       </div>
-    </a>
-  </div>
-  <div class="col-lg-4 col-sm-6">
-    <a class="portfolio-box" href="img/portfolio/fullsize/4.jpg">
-      <img class="img-fluid" src="{% static 'img/portfolio/thumbnails/4.jpg' %}" alt="">
-      <div class="portfolio-box-caption">
-        <div class="portfolio-box-caption-content">
-          <div class="project-category text-faded">
-            Category
+      <div class="col-md-4 col-sm-6 portfolio-item">
+        <a class="portfolio-link" data-toggle="modal" href="#portfolioModal4">
+          <div class="portfolio-hover">
+            <div class="portfolio-hover-content">
+              <i class="fa fa-plus fa-3x"></i>
+            </div>
           </div>
-          <div class="project-name">
-            Project Name
-          </div>
+          <img class="img-fluid" src="{% static 'img/portfolio/04-thumbnail.jpg' %}" alt="">
+        </a>
+        <div class="portfolio-caption">
+          <h4>Lines</h4>
+          <p class="text-muted">Branding</p>
         </div>
       </div>
-    </a>
-  </div>
-  <div class="col-lg-4 col-sm-6">
-    <a class="portfolio-box" href="img/portfolio/fullsize/5.jpg">
-      <img class="img-fluid" src="{% static 'img/portfolio/thumbnails/5.jpg' %}" alt="">
-      <div class="portfolio-box-caption">
-        <div class="portfolio-box-caption-content">
-          <div class="project-category text-faded">
-            Category
+      <div class="col-md-4 col-sm-6 portfolio-item">
+        <a class="portfolio-link" data-toggle="modal" href="#portfolioModal5">
+          <div class="portfolio-hover">
+            <div class="portfolio-hover-content">
+              <i class="fa fa-plus fa-3x"></i>
+            </div>
           </div>
-          <div class="project-name">
-            Project Name
-          </div>
+          <img class="img-fluid" src="{% static 'img/portfolio/05-thumbnail.jpg' %}" alt="">
+        </a>
+        <div class="portfolio-caption">
+          <h4>Southwest</h4>
+          <p class="text-muted">Website Design</p>
         </div>
       </div>
-    </a>
-  </div>
-  <div class="col-lg-4 col-sm-6">
-    <a class="portfolio-box" href="img/portfolio/fullsize/6.jpg">
-      <img class="img-fluid" src="{% static 'img/portfolio/thumbnails/6.jpg' %}" alt="">
-      <div class="portfolio-box-caption">
-        <div class="portfolio-box-caption-content">
-          <div class="project-category text-faded">
-            Category
+      <div class="col-md-4 col-sm-6 portfolio-item">
+        <a class="portfolio-link" data-toggle="modal" href="#portfolioModal6">
+          <div class="portfolio-hover">
+            <div class="portfolio-hover-content">
+              <i class="fa fa-plus fa-3x"></i>
+            </div>
           </div>
-          <div class="project-name">
-            Project Name
-          </div>
+          <img class="img-fluid" src="{% static 'img/portfolio/06-thumbnail.jpg' %}" alt="">
+        </a>
+        <div class="portfolio-caption">
+          <h4>Window</h4>
+          <p class="text-muted">Photography</p>
         </div>
       </div>
-    </a>
+    </div>
   </div>
-</div>
-</div>
 </section>
 
-<section class="bg-dark text-white">
-<div class="container text-center">
-<h2 class="mb-4">Free Download at Start Bootstrap!</h2>
-<a class="btn btn-light btn-xl sr-button" href="http://startbootstrap.com/template-overviews/creative/">Download Now!</a>
-</div>
+<!-- About -->
+<section id="about">
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-12 text-center">
+        <h2 class="section-heading text-uppercase">About</h2>
+        <h3 class="section-subheading text-muted">{{ config.site_about_desc }}</h3>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-lg-12">
+        <ul class="timeline">
+          {% for timeline in timelines %}
+          <li class="{% cycle '' 'timeline-inverted' %}">
+            <div class="timeline-image">
+              <img class="rounded-circle img-fluid" src="/media/{{ timeline.timeline_img }}" alt="">
+            </div>
+            <div class="timeline-panel">
+              <div class="timeline-heading">
+                <h4>{{ timeline.timeline_time }}</h4>
+                <h4 class="subheading">{{ timeline.timeline_title }}</h4>
+              </div>
+              <div class="timeline-body">
+                <p class="text-muted">{{ timeline.timeline_desc }}</p>
+              </div>
+            </div>
+          </li>
+          {% endfor %}
+          <li class="timeline-inverted">
+            <div class="timeline-image">
+              <h4>更多
+                <br>精彩
+                <br>在路上!</h4>
+            </div>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
 </section>
 
+<!-- Team -->
+<section class="bg-light" id="team">
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-12 text-center">
+        <h2 class="section-heading text-uppercase">Our Amazing Team</h2>
+        <h3 class="section-subheading text-muted">{{ config.site_team_desc }}</h3>
+      </div>
+    </div>
+    <div class="row">
+      {% for member in teamers %}
+      <div class="col-sm-4">
+        <div class="team-member">
+          <img class="mx-auto rounded-circle" src="/media/{{ member.Teamer_avatar }}" alt="{{ member.Teamer_name }}">
+          <h4>{{ member.Teamer_name }}</h4>
+          <h5>{{ member.Teamer_position }}</h5>
+          <p class="text-muted">{{ member.Teamer_desc }}</p>
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+    <div class="row">
+      <div class="col-lg-8 mx-auto text-center">
+        <p class="large text-muted">只有通过不断学习创新，才能保持个人及公司的核心竞争力，才能不被社会淘汰，作为天高科技的一员，无论职别，无论职责，都需要在自我领域不断学习成长，才能为自己、为公司创造更大价值。</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Clients -->
+<section class="py-5">
+  <div class="container">
+    <div class="row">
+      {% for client in clients %}
+      <div class="col-md-3 col-sm-6" style="margin-top: .5em; margin-bottom: .5em;">
+        <a href="{{ client.client_site }}">
+          <img class="img-fluid d-block mx-auto" src="/media/{{ client.client_logo }}" alt="{{ client.client_name }}">
+        </a>
+      </div>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+
+<!-- Contact -->
 <section id="contact">
-<div class="container">
-<div class="row">
-  <div class="col-lg-8 mx-auto text-center">
-    <h2 class="section-heading">Let's Get In Touch!</h2>
-    <hr class="my-4">
-    <p class="mb-5">Ready to start your next project with us? That's great! Give us a call or send us an email and we will get back to you as soon as possible!</p>
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-12 text-center">
+        <h2 class="section-heading text-uppercase">Contact Us</h2>
+        <h3 class="section-subheading text-muted">{{ config.site_contact_desc }}</h3>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-lg-12">
+        <div class="contact_info" style="width: 100%;">
+          <h3>0769-3368668</h3>
+          <p>地址：广东省东莞市市辖区东平街233号  中天创客谷</p>
+          <p>邮编：523570</p>
+          <p>Email：tigo_network@163.com</p>
+        </div>
+        <div class="mapContainer">
+          <div id="map" style="width: 100%; height: 600px;"></div>
+        </div>
+      </div>
+    </div>
   </div>
-</div>
-<div class="row">
-  <div class="col-lg-4 ml-auto text-center">
-    <i class="fa fa-phone fa-3x mb-3 sr-contact"></i>
-    <p>123-456-6789</p>
-  </div>
-  <div class="col-lg-4 mr-auto text-center">
-    <i class="fa fa-envelope-o fa-3x mb-3 sr-contact"></i>
-    <p>
-      <a href="mailto:your-email@your-domain.com">feedback@startbootstrap.com</a>
-    </p>
-  </div>
-</div>
-</div>
 </section>
+
+<!-- Footer -->
+<footer>
+  <div class="container">
+    <div class="row">
+      <div class="col-md-4">
+        <span class="copyright">Copyright &copy; {{ config.site_copyright }}</span>
+      </div>
+      <div class="col-md-4">
+        <ul class="list-inline social-buttons">
+          <li class="list-inline-item">
+            <a href="http://wpa.qq.com/msgrd?v=3&uin={{ config.site_qq }}&site=qq&menu=yes" target="_blank">
+              <img src="{% static '/img/qq.png' %}" alt="qq" style="height: 20px; vertical-align: top; margin-top: 10px;" />
+            </a>
+          </li>
+          <li class="list-inline-item" style="position: relative;">
+            <a id="weichatIcon">
+              <img src="{% static '/img/wechat.png' %}" alt="wechat" style="height: 20px; vertical-align: top; margin-top: 10px;" />
+            </a>
+            <div class="wxcode">
+              <img src="{% static '/img/wx_code.png' %}" alt="wechat" style="width: 100%; height: 100%;" />
+            </div>
+          </li>
+          <li class="list-inline-item">
+            <a href="mailto: {{ config.site_email }}">
+              <img src="{% static '/img/email.png' %}" alt="email" style="height: 20px; vertical-align: top; margin-top: 10px;" />
+            </a>
+          </li>
+        </ul>
+      </div>
+      <div class="col-md-4">
+        <ul class="list-inline quicklinks">
+          <li class="list-inline-item">
+            <a href="#">Privacy Policy</a>
+          </li>
+          <li class="list-inline-item">
+            <a href="#">Terms of Use</a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<!-- Portfolio Modals -->
+
+<!-- Modal 1 -->
+<div class="portfolio-modal modal fade" id="portfolioModal1" tabindex="-1" role="dialog" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="close-modal" data-dismiss="modal">
+        <div class="lr">
+          <div class="rl"></div>
+        </div>
+      </div>
+      <div class="container">
+        <div class="row">
+          <div class="col-lg-8 mx-auto">
+            <div class="modal-body">
+              <!-- Project Details Go Here -->
+              <h2 class="text-uppercase">Project Name</h2>
+              <p class="item-intro text-muted">Lorem ipsum dolor sit amet consectetur.</p>
+              <img class="img-fluid d-block mx-auto" src="{% static 'img/portfolio/01-full.jpg' %}" alt="">
+              <p>Use this area to describe your project. Lorem ipsum dolor sit amet, consectetur adipisicing elit. Est blanditiis dolorem culpa incidunt minus dignissimos deserunt repellat aperiam quasi sunt officia expedita beatae cupiditate, maiores repudiandae, nostrum, reiciendis facere nemo!</p>
+              <ul class="list-inline">
+                <li>Date: January 2017</li>
+                <li>Client: Threads</li>
+                <li>Category: Illustration</li>
+              </ul>
+              <button class="btn btn-primary" data-dismiss="modal" type="button">
+                <i class="fa fa-times"></i>
+                Close Project</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Modal 2 -->
+<div class="portfolio-modal modal fade" id="portfolioModal2" tabindex="-1" role="dialog" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="close-modal" data-dismiss="modal">
+        <div class="lr">
+          <div class="rl"></div>
+        </div>
+      </div>
+      <div class="container">
+        <div class="row">
+          <div class="col-lg-8 mx-auto">
+            <div class="modal-body">
+              <!-- Project Details Go Here -->
+              <h2 class="text-uppercase">Project Name</h2>
+              <p class="item-intro text-muted">Lorem ipsum dolor sit amet consectetur.</p>
+              <img class="img-fluid d-block mx-auto" src="{% static 'img/portfolio/02-full.jpg' %}" alt="">
+              <p>Use this area to describe your project. Lorem ipsum dolor sit amet, consectetur adipisicing elit. Est blanditiis dolorem culpa incidunt minus dignissimos deserunt repellat aperiam quasi sunt officia expedita beatae cupiditate, maiores repudiandae, nostrum, reiciendis facere nemo!</p>
+              <ul class="list-inline">
+                <li>Date: January 2017</li>
+                <li>Client: Explore</li>
+                <li>Category: Graphic Design</li>
+              </ul>
+              <button class="btn btn-primary" data-dismiss="modal" type="button">
+                <i class="fa fa-times"></i>
+                Close Project</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Modal 3 -->
+<div class="portfolio-modal modal fade" id="portfolioModal3" tabindex="-1" role="dialog" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="close-modal" data-dismiss="modal">
+        <div class="lr">
+          <div class="rl"></div>
+        </div>
+      </div>
+      <div class="container">
+        <div class="row">
+          <div class="col-lg-8 mx-auto">
+            <div class="modal-body">
+              <!-- Project Details Go Here -->
+              <h2 class="text-uppercase">Project Name</h2>
+              <p class="item-intro text-muted">Lorem ipsum dolor sit amet consectetur.</p>
+              <img class="img-fluid d-block mx-auto" src="{% static 'img/portfolio/03-full.jpg' %}" alt="">
+              <p>Use this area to describe your project. Lorem ipsum dolor sit amet, consectetur adipisicing elit. Est blanditiis dolorem culpa incidunt minus dignissimos deserunt repellat aperiam quasi sunt officia expedita beatae cupiditate, maiores repudiandae, nostrum, reiciendis facere nemo!</p>
+              <ul class="list-inline">
+                <li>Date: January 2017</li>
+                <li>Client: Finish</li>
+                <li>Category: Identity</li>
+              </ul>
+              <button class="btn btn-primary" data-dismiss="modal" type="button">
+                <i class="fa fa-times"></i>
+                Close Project</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Modal 4 -->
+<div class="portfolio-modal modal fade" id="portfolioModal4" tabindex="-1" role="dialog" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="close-modal" data-dismiss="modal">
+        <div class="lr">
+          <div class="rl"></div>
+        </div>
+      </div>
+      <div class="container">
+        <div class="row">
+          <div class="col-lg-8 mx-auto">
+            <div class="modal-body">
+              <!-- Project Details Go Here -->
+              <h2 class="text-uppercase">Project Name</h2>
+              <p class="item-intro text-muted">Lorem ipsum dolor sit amet consectetur.</p>
+              <img class="img-fluid d-block mx-auto" src="{% static 'img/portfolio/04-full.jpg' %}" alt="">
+              <p>Use this area to describe your project. Lorem ipsum dolor sit amet, consectetur adipisicing elit. Est blanditiis dolorem culpa incidunt minus dignissimos deserunt repellat aperiam quasi sunt officia expedita beatae cupiditate, maiores repudiandae, nostrum, reiciendis facere nemo!</p>
+              <ul class="list-inline">
+                <li>Date: January 2017</li>
+                <li>Client: Lines</li>
+                <li>Category: Branding</li>
+              </ul>
+              <button class="btn btn-primary" data-dismiss="modal" type="button">
+                <i class="fa fa-times"></i>
+                Close Project</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Modal 5 -->
+<div class="portfolio-modal modal fade" id="portfolioModal5" tabindex="-1" role="dialog" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="close-modal" data-dismiss="modal">
+        <div class="lr">
+          <div class="rl"></div>
+        </div>
+      </div>
+      <div class="container">
+        <div class="row">
+          <div class="col-lg-8 mx-auto">
+            <div class="modal-body">
+              <!-- Project Details Go Here -->
+              <h2 class="text-uppercase">Project Name</h2>
+              <p class="item-intro text-muted">Lorem ipsum dolor sit amet consectetur.</p>
+              <img class="img-fluid d-block mx-auto" src="{% static 'img/portfolio/05-full.jpg' %}" alt="">
+              <p>Use this area to describe your project. Lorem ipsum dolor sit amet, consectetur adipisicing elit. Est blanditiis dolorem culpa incidunt minus dignissimos deserunt repellat aperiam quasi sunt officia expedita beatae cupiditate, maiores repudiandae, nostrum, reiciendis facere nemo!</p>
+              <ul class="list-inline">
+                <li>Date: January 2017</li>
+                <li>Client: Southwest</li>
+                <li>Category: Website Design</li>
+              </ul>
+              <button class="btn btn-primary" data-dismiss="modal" type="button">
+                <i class="fa fa-times"></i>
+                Close Project</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Modal 6 -->
+<div class="portfolio-modal modal fade" id="portfolioModal6" tabindex="-1" role="dialog" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="close-modal" data-dismiss="modal">
+        <div class="lr">
+          <div class="rl"></div>
+        </div>
+      </div>
+      <div class="container">
+        <div class="row">
+          <div class="col-lg-8 mx-auto">
+            <div class="modal-body">
+              <!-- Project Details Go Here -->
+              <h2 class="text-uppercase">Project Name</h2>
+              <p class="item-intro text-muted">Lorem ipsum dolor sit amet consectetur.</p>
+              <img class="img-fluid d-block mx-auto" src="{% static 'img/portfolio/06-full.jpg' %}" alt="">
+              <p>Use this area to describe your project. Lorem ipsum dolor sit amet, consectetur adipisicing elit. Est blanditiis dolorem culpa incidunt minus dignissimos deserunt repellat aperiam quasi sunt officia expedita beatae cupiditate, maiores repudiandae, nostrum, reiciendis facere nemo!</p>
+              <ul class="list-inline">
+                <li>Date: January 2017</li>
+                <li>Client: Window</li>
+                <li>Category: Photography</li>
+              </ul>
+              <button class="btn btn-primary" data-dismiss="modal" type="button">
+                <i class="fa fa-times"></i>
+                Close Project</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
 
 <!-- slider start -->
 <!--<div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">-->
@@ -278,5 +574,27 @@
     <!--{% endfor %}-->
     <!--</ul>-->
 <!--</div>-->
+
+<script>
+    var init = function() {
+      var center = new qq.maps.LatLng(23.034280,113.774430);
+      var map = new qq.maps.Map(document.getElementById('map'),{
+        center: center,
+        zoom: 13
+      });
+      var marker = new qq.maps.Marker({
+        position: center,
+        map: map
+      });
+      var infoWin = new qq.maps.InfoWindow({
+        map: map
+      });
+      infoWin.open();
+      // tips  自定义内容
+      infoWin.setContent('<div style="width:200px;padding-top:10px;">' + '<img style="float:left; margin-right: 10px;" src="{% static '/img/yes.png' %}"/> ' + '<p style="color: #666; margin-bottom: 8px; font-size: 18px;">天高网络</p><p style="color: #666; font-size: 14px;">广东省东莞市市辖区东平街233号</p></div>');
+      infoWin.setPosition(center);
+    }
+    init()
+  </script>
 
 {% endblock %}
