@@ -6,6 +6,7 @@ from django.contrib.auth.models import User
 # from django.contrib.auth.models import AbstractUser
 from ckeditor_uploader.fields import RichTextUploadingField
 
+from django.utils.safestring import mark_safe
 
 # class User(AbstractUser):
 #     token = models.CharField(max_length=40)
@@ -48,6 +49,7 @@ class Slide(models.Model):
     slide_title = models.CharField('标题', max_length=255)
     slide_link = models.URLField('链接地址', max_length=255, null=True)
     slide_img = models.FileField('图片', max_length=255)
+    slide_isopen = models.BooleanField('是否发布', choices=IS_OPEN_CHOICES, default=1)
     create_time = models.DateTimeField('发布日期', auto_now=True)
     update_time = models.DateTimeField('更新日期', auto_now=True)
 
@@ -101,6 +103,11 @@ class Teamer(models.Model):
     class Meta:
         verbose_name = '团队成员'
         verbose_name_plural = '团队成员'
+
+    def admin_avatar(self):
+        return mark_safe('<img src="/media/%s" alt="" style="width: 60px; height: 60px;" />' % self.Teamer_avatar)
+    admin_avatar.short_description = '团队成员头像'
+    admin_avatar.allow_tags = True
 
     def __str__(self):
         return self.Teamer_name
