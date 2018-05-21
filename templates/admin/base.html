@@ -35,6 +35,9 @@
 <body id="page-top fixed-nav sticky-footer bg-dark" class="{% if is_popup %}popup {% endif %}{% block bodyclass %}{% endblock %}"
   data-admin-utc-offset="{% now "Z" %}">
 
+    <!--{% block navigation %}{% endblock %}-->
+
+    {% if has_permission %}
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top" id="mainNav">
       {% block branding %}{% endblock %}
       <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
@@ -223,10 +226,9 @@
         </ul>
       </div>
     </nav>
+    {% endif %}
 
-    <!--{% block navigation %}{% endblock %}-->
-
-    <div class="content-wrapper">
+    <div id="content" class="{% if has_permission %} content-wrapper {% else %} colM {% endif %}">
         <div class="container-fluid" style="padding-top: 60px;">
             <!-- Content -->
             <div id="content" class="{% block coltype %}colM{% endblock %}">
