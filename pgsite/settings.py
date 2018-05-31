@@ -42,6 +42,7 @@ INSTALLED_APPS = [
     'pgsite.mainsite',
     'pgsite.graphqlapi',
     'pgsite.restapi',
+    'bookstore',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
