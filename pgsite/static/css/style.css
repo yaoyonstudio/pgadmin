@@ -1,0 +1,156 @@
+* {
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    min-height: 100%;
+}
+
+.main {
+    margin-top: 12px;
+    margin-bottom: 84px;
+}
+
+.footer {
+    height: 72px;
+}
+
+.copyright {
+    height: 72px;
+    line-height: 72px;
+}
+
+.slide .carousel-item img {
+    height: 328px;
+}
+
+.featured {
+    margin: 20px 0;
+}
+.featured ul {
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+}
+.cardItem {
+    display: block;
+    flex: 1;
+    border: none;
+    text-align: center;
+}
+.cardItem:not(:last-child) {
+    margin-right: 1rem;
+}
+
+.cardItem img {
+    margin: 0 auto;
+    width: 118px;
+    height: 118px;
+}
+.cardItem .card-text {
+    margin-top: 10px;
+    text-align: center;
+    font-size: 18px;
+}
+
+.ad {
+
+}
+
+.ad_item {
+    margin-bottom: 10px;
+}
+
+.ad_item img {
+    width: 100%;
+}
+
+
+.postList {
+    margin: 20px 0;
+}
+.postList ul {
+
+}
+.postList li {
+    list-style: none;
+    margin-bottom: 16px;
+}
+.postList li a {
+    display: flex;
+    flex-direction: row;
+    text-decoration: none;
+}
+.postList li:not(:last-child) {
+    border-bottom: 1px solid #eee;
+}
+.postList li img {
+    width: 200px;
+    height: 160px;
+    margin-right: 20px;
+}
+.postList li aside {
+    flex: 1;
+}
+.postList li h4 {
+
+}
+.postList li p {
+
+}
+
+.mapContainer {
+    background-color: #fff;
+    padding: 1em;
+    border-radius: .4em;
+    margin-top: 1em;
+}
+.contact_info {
+    width: 100%;
+    padding: 0 .6em;
+}
+.contact_info h3{
+    font-weight: 600;
+    font-size: 3em;
+    color: #fff;
+    line-height: 60px;
+    background: url(../img/tel_icon.png) no-repeat left center;
+    background-size: 50px 50px;
+    padding-left: 60px;
+}
+.contact_info p {
+    font-size: 1.4em;
+    color: #fff;
+    line-height: 24px;
+}
+
+
+.wxcode {
+    display: none;
+    position: absolute; width: 108px; height: 108px; left: -34px; bottom: 50px; padding: .4em; background-color: #fed136; border-radius: .2em;
+}
+.wxcode::after {
+    content: '';
+    display: block;
+    width: 0;
+    height: 0;
+    border-width: 10px 10px 0;
+    border-style: solid;
+    border-color: #fed136 transparent transparent;
+    position: absolute;
+    bottom: -8px;
+    left: 50%;
+    margin-left: -10px;
+}
+
+
+
+
+
+
+
+
+
+
+

@@ -13,6 +13,29 @@ SEX_CHOICES = (
     (0, '女')
 )
 
+AUTHOR_COUNTRY_CHOICES = (
+    ('中国', '中国'),
+    ('美国', '美国'),
+    ('英国', '英国'),
+    ('法国', '法国'),
+    ('德国', '德国'),
+    ('意大利', '意大利'),
+    ('日本', '日本'),
+    ('加拿大', '加拿大'),
+)
+
+BOOK_LANG_CHOICES = (
+    ('中文', '中文'),
+    ('英文', '英文'),
+)
+
+BOOK_PAPER_CHOICES = (
+    ('胶版纸', '胶版纸'),
+    ('特种纸', '特种纸'),
+    ('铜版纸', '铜版纸'),
+    ('白卡纸', '白卡纸'),
+)
+
 BOOK_SIZE_CHOICES = (
     (1, '64开'),
     (2, '42开'),
@@ -75,7 +98,7 @@ class Customer(models.Model):
 
     class Meta:
         verbose_name = '客户信息'
-        verbose_name_plural = '客户信息'
+        verbose_name_plural = '管理客户信息'
 
     def __str__(self):
         return self.nickname
@@ -94,15 +117,14 @@ post_save.connect(create_customer, sender=User)
 class Author(models.Model):
     author_name = models.CharField('姓名', max_length=100, null=False)
     author_nickname = models.CharField('作者', max_length=100, null=False)
-    author_country = models.CharField('国家', max_length=100, null=False)
+    author_country = models.CharField('国家', max_length=100, choices=AUTHOR_COUNTRY_CHOICES, default='中国')
     author_desc = RichTextUploadingField('作者简介')
-
     create_time = models.DateTimeField('发布日期', auto_now=True)
     update_time = models.DateTimeField('更新日期', auto_now=True)
 
     class Meta:
         verbose_name = '作者信息'
-        verbose_name_plural = '作者信息'
+        verbose_name_plural = '管理作者信息'
 
     def __str__(self):
         return self.author_nickname
@@ -113,13 +135,12 @@ class Publisher(models.Model):
     publisher_name = models.CharField('出版社', max_length=100, null=False)
     publisher_logo = models.FileField(upload_to='logo/%Y/%m/%d/', null=True, verbose_name='出版社LOGO', blank=True)
     publisher_desc = models.CharField('出版社介绍', max_length=200, null=False)
-
     create_time = models.DateTimeField('发布日期', auto_now=True)
     update_time = models.DateTimeField('更新日期', auto_now=True)
 
     class Meta:
         verbose_name = '出版社信息'
-        verbose_name_plural = '出版社信息'
+        verbose_name_plural = '管理出版社信息'
 
     def __str__(self):
         return self.publisher_name
@@ -127,19 +148,17 @@ class Publisher(models.Model):
 
 # 书籍分类 BookCate
 class BookCate(models.Model):
-    bookcate_name = models.CharField('分类名', max_length=100, null=False)
-    bookcate_parent = models.ForeignKey('self', blank=True, null=True, on_delete=None, parent_link=True, related_name='children')
-
+    name = models.CharField('分类名', max_length=100, null=False)
+    parent = models.ForeignKey('self', blank=True, null=True, on_delete=models.CASCADE, related_name='bookcate')
     create_time = models.DateTimeField('发布日期', auto_now=True)
     update_time = models.DateTimeField('更新日期', auto_now=True)
 
     class Meta:
-        managed = False
         verbose_name = '书籍分类'
-        verbose_name_plural = '书籍分类'
+        verbose_name_plural = '管理书籍分类'
 
     def __str__(self):
-        return self.bookcate_name
+        return self.name
 
 
 # 书籍 Book
@@ -147,37 +166,34 @@ class Book(models.Model):
     book_name = models.CharField('书名', max_length=250, null=False)
     book_isbn = models.CharField('ISBN', max_length=50, null=False)
     book_version = models.CharField('版本', max_length=10, null=True, blank=True)
-    book_lang = models.CharField('语言', max_length=100, null=True, blank=True)
-    book_paper = models.CharField('用纸', max_length=100, null=True, blank=True)
-    book_size =models.BooleanField('开本', choices=BOOK_SIZE_CHOICES, default=4)
-    book_packing =models.BooleanField('装帧', choices=BOOK_PACKING_CHOICES, default=1)
-    book_able =models.BooleanField('是否上架', choices=BOOK_ISABLE_CHOICES, default=1)
-    book_recommend =models.BooleanField('是否推荐', choices=BOOK_RECOMMEND_CHOICES, default=1)
-    book_publish_year = models.CharField(blank=False, max_length=4, choices=get_years(),
-                                         default=datetime.datetime.now().year)
     book_pages = models.PositiveIntegerField('页数', null=True, blank=True)
     book_words = models.PositiveIntegerField('字数', null=True, blank=True)
+    book_original_price = models.FloatField('原价')
+    book_sale_price = models.FloatField('优惠价')
+    book_sale_nums = models.PositiveIntegerField('销售数量', null=True, blank=True)
+    book_paper = models.CharField('用纸', max_length=100, choices=BOOK_PAPER_CHOICES, null=True, blank=True)
+    book_size =models.PositiveIntegerField('开本', choices=BOOK_SIZE_CHOICES)
+    book_lang = models.CharField('语言', choices=BOOK_LANG_CHOICES, max_length=100)
+    book_packing =models.PositiveIntegerField('装帧', choices=BOOK_PACKING_CHOICES, default=1)
+    book_able =models.BooleanField('是否上架', choices=BOOK_ISABLE_CHOICES, default=1)
+    book_recommend =models.BooleanField('是否推荐', choices=BOOK_RECOMMEND_CHOICES, default=1)
+    book_publish_year = models.PositiveIntegerField('出版年份', blank=False, choices=get_years(), default=datetime.datetime.now().year)
+    author = models.ForeignKey('Author', on_delete=models.CASCADE, null=True, blank=True, verbose_name='书籍作者')
+    publisher = models.ForeignKey('Publisher', on_delete=models.CASCADE, null=True, blank=True, verbose_name='书籍出版社')
+    cate = models.ForeignKey('BookCate', on_delete=models.CASCADE, null=True, blank=True, verbose_name='书籍类别')
     book_desc = RichTextUploadingField('书籍介绍', null=True, blank=True)
     book_content = RichTextUploadingField('目录', null=True, blank=True)
     book_preface = RichTextUploadingField('前言', null=True, blank=True)
     book_comments = RichTextUploadingField('书籍评价', null=True, blank=True)
-    book_original_price = models.FloatField('原价')
-    book_sale_price = models.FloatField('优惠价')
-    book_sale_nums = models.PositiveIntegerField('销售数量', null=True, blank=True)
-
-    author = models.ForeignKey('Author', on_delete=models.CASCADE, verbose_name='书籍作者')
-    cate = models.ForeignKey('BookCate', on_delete=models.CASCADE, verbose_name='书籍类别')
-
     create_time = models.DateTimeField('发布日期', auto_now=True)
     update_time = models.DateTimeField('更新日期', auto_now=True)
 
     class Meta:
         verbose_name = '书籍信息'
-        verbose_name_plural = '书籍信息'
+        verbose_name_plural = '管理书籍信息'
 
     def __str__(self):
         return self.book_name
-
 
 
 # 书籍相片 BookImg
@@ -192,8 +208,8 @@ class BookImg(models.Model):
     update_time = models.DateTimeField('更新日期', auto_now=True)
 
     class Meta:
-        verbose_name = '文章图片'
-        verbose_name_plural = '管理文章图片'
+        verbose_name = '书籍图片'
+        verbose_name_plural = '管理书籍图片'
 
     def __str__(self):
         return self.img_title
@@ -211,8 +227,8 @@ class BookComment(models.Model):
     update_time = models.DateTimeField('更新日期', auto_now=True)
 
     class Meta:
-        verbose_name = '文章评论'
-        verbose_name_plural = '管理文章评论'
+        verbose_name = '书籍评论'
+        verbose_name_plural = '管理书籍评论'
 
     def __str__(self):
         return self.comment_content
@@ -223,9 +239,13 @@ class Cart(models.Model):
     book = models.ForeignKey('Book', on_delete=models.CASCADE, verbose_name='书籍')
     customer = models.ForeignKey('Customer', on_delete=models.CASCADE, verbose_name='客户')
     nums = models.PositiveIntegerField('数量', default=1)
-
     create_time = models.DateTimeField('发布日期', auto_now=True)
     update_time = models.DateTimeField('更新日期', auto_now=True)
+
+    class Meta:
+        verbose_name = '购物车'
+        verbose_name_plural = '管理购物车'
+
 
 
 # 订单 Order
@@ -233,14 +253,12 @@ class Order(models.Model):
     customer = models.ForeignKey('Customer', on_delete=models.CASCADE, verbose_name='客户')
     goods = models.CharField('商品', max_length=250, null=False)
     status = models.BooleanField('订单状态', choices=BOOK_ORDER_STATUS, default=1)
-
     create_time = models.DateTimeField('发布日期', auto_now=True)
     update_time = models.DateTimeField('更新日期', auto_now=True)
 
-
-
-
-
+    class Meta:
+        verbose_name = '订单'
+        verbose_name_plural = '管理订单'
 
 
 

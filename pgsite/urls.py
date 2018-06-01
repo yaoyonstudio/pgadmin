@@ -25,10 +25,13 @@ from pgsite.mainsite import views
 urlpatterns = [
     path('', views.index, name = 'index'),
     path('post/<int:id>/', views.post_detail, name = 'post_detail'),
+    path('jet/', include('jet.urls', 'jet')),
+    path('jet/dashboard/', include('jet.dashboard.urls', 'jet-dashboard')),
     path('admin/', admin.site.urls),
     path('', include('pgsite.mainsite.urls')),
     path('', include('pgsite.graphqlapi.urls')),
     path('restapi/', include('pgsite.restapi.urls')),
+    path('bookstore/', include('bookstore.urls')),
     path('api-token-auth', obtain_jwt_token),
     path('api-token-refresh', refresh_jwt_token),
     path('api-token-verify', verify_jwt_token),

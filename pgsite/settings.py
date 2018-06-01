@@ -43,6 +43,8 @@ INSTALLED_APPS = [
     'pgsite.graphqlapi',
     'pgsite.restapi',
     'bookstore',
+    'jet.dashboard',
+    'jet',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',

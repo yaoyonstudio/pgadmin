@@ -1,0 +1,11 @@
+{% extends "bookstore/common/base.html" %}
+{% load static %}
+{% block mainContent %}
+  <ul>
+    {% for cate in cates %}
+      <li>
+        {{ cate.name }}
+      </li>
+    {% endfor %}
+  </ul>
+{% endblock %}
