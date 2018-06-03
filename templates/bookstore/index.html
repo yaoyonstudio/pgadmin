@@ -1,11 +1,113 @@
-{% extends "bookstore/common/base.html" %}
+{% extends "bookstore/common/main.html" %}
 {% load static %}
 {% block mainContent %}
-  <ul>
-    {% for cate in cates %}
-      <li>
-        {{ cate.name }}
-      </li>
-    {% endfor %}
-  </ul>
+<div class="container is-fluid">
+    <!-- Carousel -->
+    <div class='carousel carousel-animated carousel-animate-fade' data-autoplay="true" data-delay="5000" style="margin: 1rem 0;">
+      <div class='carousel-container'>
+        <div class='carousel-item has-background is-active'>
+          <img class="is-background" src="{% static 'img/slider1.jpg' %}" alt="" />
+          <div class="title">Merry Christmas</div>
+        </div>
+        <div class='carousel-item has-background'>
+          <img class="is-background" src="{% static 'img/slider2.jpg' %}" alt="" />
+          <div class="title">Sushi time</div>
+        </div>
+        <div class='carousel-item has-background'>
+          <img class="is-background" src="{% static 'img/slider1.jpg' %}" alt="" />
+          <div class="title">Life</div>
+        </div>
+      </div>
+      <div class="carousel-navigation is-overlay">
+        <div class="carousel-nav-left transparent">
+          <i class="fa fa-chevron-left" aria-hidden="true"></i>
+        </div>
+        <div class="carousel-nav-right transparent">
+          <i class="fa fa-chevron-right" aria-hidden="true"></i>
+        </div>
+      </div>
+    </div>
+    <!-- Carousel -->
+
+    <div class="books_content">
+        {% for cate in cates %}
+            <section class="cate_content">
+                <header class="flex-r flex-c-b padding-left padding-right cate_content_header" style="background-color: {{ cate.color }}">
+                    <h3>{{ cate.name }}</h3>
+                    <div class="tabs is-right is-boxed flexItem">
+                      <ul>
+                          {% for sub in cate.sub %}
+                              <li data-index="{{ forloop.counter0 }}" class="cateMenuItem {% if forloop.counter0 == 0 %}is-active{% endif %}">
+                                  <a class="is-radiusless">
+                                    <span>{{ sub.name }}</span>
+                                  </a>
+                              </li>
+                          {% endfor %}
+                      </ul>
+                    </div>
+                </header>
+                <article class="flex-r flex-s-b cate_content_main" style="border-bottom: 4px solid {{ cate.color }}">
+                    <a class="cate_content_main_left">
+                        <img src="/media/{{ cate.featured_img }}" alt="{{ cate.name }}" />
+                    </a>
+                    <aside class="flexItem cate_content_main_right">
+                        {% for sub in cate.sub %}
+                        <ul class="{% if forloop.counter0 == 0 %}flex {% else %}none {% endif %}flex-r flex-s-s flex-wrap" data-index="{{ forloop.counter0 }}">
+                            {% for b in sub.books %}
+                                <li class="cate_content_main_right_book">
+                                    <a class="flex-c flex-c-c ">
+                                        <img src="/media/{{ b.img.bookimg_img }}" alt="{{ b.img.bookimg_title }}" />
+                                        <h4>{{ b.book_name }}</h4>
+                                        <p>￥{{ b.book_original_price }}<span>￥{{ b.book_sale_price }}</span></p>
+                                    </a>
+                                </li>
+                            {% endfor %}
+                        </ul>
+                        {% endfor %}
+                    </aside>
+                </article>
+            </section>
+        {% endfor %}
+    </div>
+
+
+</div>
+<script>
+    $(document).ready(function () {
+        <!-- 初始化 Carousel -->
+        var carousels = bulmaCarousel.attach();
+
+        <!-- 左右箭头的显示样式行为 -->
+        var addTransparentClass = function () {
+            $('.carousel-nav-left').removeClass('transparent')
+            $('.carousel-nav-right').removeClass('transparent')
+        }
+        $('.carousel-container').mouseenter(addTransparentClass)
+        $('.carousel-nav-left').mouseenter(addTransparentClass)
+        $('.carousel-nav-right').mouseenter(addTransparentClass)
+        $('.carousel-container').mouseleave(function () {
+            $('.carousel-nav-left').addClass('transparent')
+            $('.carousel-nav-right').addClass('transparent')
+        })
+
+        <!-- 分类模块菜单事件 -->
+        $('.cateMenuItem').mouseenter(function () {
+            var _index = $(this).data('index')
+            $(this).siblings('li').removeClass('is-active')
+            $(this).addClass('is-active')
+            var _uls = $(this).parents('.cate_content').children('.cate_content_main').children('.cate_content_main_right').find('ul')
+            if (!_uls || !_uls.length) return false
+            _uls.each(function (index, element) {
+                if (index === _index) {
+                    $(element).removeClass('none')
+                    $(element).addClass('flex')
+                } else {
+                    $(element).removeClass('flex')
+                    $(element).addClass('none')
+                }
+            })
+            console.log()
+        })
+    })
+</script>
 {% endblock %}

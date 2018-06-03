@@ -1,0 +1,100 @@
+{% extends "bookstore/common/base.html" %}
+{% load static %}
+
+{% block mainHeader %}
+  {% include 'bookstore/common/top_menu.html' %}
+  <div class="container is-fluid" style="padding: 1rem 0;">
+    <div class="level">
+      <!-- Left side -->
+      <div class="level-left">
+        <div class="level-item">
+          <img alt="LOGO" style="width: 168px; height: 5rem;" src="https://ss0.bdstatic.com/70cFvHSh_Q1YnxGkpoWK1HF6hhy/it/u=454171939,1037492627&fm=27&gp=0.jpg">
+        </div>
+      </div>
+      <div class="level-right">
+        <div class="level-item">
+          <div class="field has-addons has-addons-centered" style="width: 100%;">
+            <p class="control has-icons-left">
+              <span class="icon is-small is-left">
+                <i class="fa fa-book"></i>
+              </span>
+              <span class="select is-info">
+                <select>
+                  <option>选择类别</option>
+                  {% for cate in cates %}
+                  <option value="{{ cate.id }}">{{ cate.name }}</option>
+                  {% endfor %}
+                </select>
+              </span>
+
+            </p>
+            <p class="control is-expanded">
+              <input class="input is-info" style="width: 20rem;" type="text" placeholder="搜索图书">
+            </p>
+            <p class="control">
+              <button class="button is-info" style="padding-left: 1rem; padding-right: 1rem;">
+                <span class="icon is-small">
+                  <i class="fa fa-search"></i>
+                </span>
+                <span>搜索</span>
+              </button>
+            </p>
+          </div>
+        </div>
+        <div class="level-item">
+          <a class="button is-primary">
+            <span class="icon is-small">
+              <i class="fa fa-search-plus"></i>
+            </span>
+            <span>高级搜索</span>
+          </a>
+        </div>
+        <div class="level-item">
+          <a class="button is-danger" style="padding-left: 1.6rem; padding-right: 1.5rem;">
+            <span>购物车</span>
+            <span class="icon is-small">
+              <i class="fa fa-shopping-cart"></i>
+            </span>
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+  <nav class="navbar is-info">
+  <div class="container is-fluid">
+    <div id="navbarExampleTransparentExample" class="navbar-menu">
+    <div class="navbar-brand" style="margin-left: 0;">
+      <p class="navbar-item has-background-link" style="width: 168px; justify-content: center;">书籍分类</p>
+    </div>
+    <div class="navbar-start">
+      {% for cate in cates %}
+      <div class="navbar-item has-dropdown is-hoverable">
+        <a class="navbar-link" href="/documentation/overview/start/">
+          {{ cate.name }}
+        </a>
+        <div class="navbar-dropdown is-boxed">
+          {% for sub in cate.sub %}
+          <a class="navbar-item" href="/documentation/overview/start/">
+            {{ sub.name }}
+          </a>
+          {% endfor %}
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+  </div>
+  </div>
+</nav>
+{% endblock %}
+
+{% block mainFooter %}
+  <footer class="footer" style="margin-top: 2rem; background-color: #eee;">
+    <div class="container">
+      <div class="content has-text-centered">
+        <p>
+          版权所有@copyright 2018</a>
+        </p>
+      </div>
+    </div>
+  </footer>
+{% endblock %}

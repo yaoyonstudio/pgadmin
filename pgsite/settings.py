@@ -42,7 +42,7 @@ INSTALLED_APPS = [
     'pgsite.mainsite',
     'pgsite.graphqlapi',
     'pgsite.restapi',
-    'bookstore',
+    'bookstore.apps.BookstoreConfig',
     'jet.dashboard',
     'jet',
     'django.contrib.admin',
@@ -63,6 +63,8 @@ CORS_ORIGIN_ALLOW_ALL = True
 CORS_ORIGIN_WHITELIST = (
     '127.0.0.1:8888',
     '127.0.0.1:8008',
+    '127.0.0.1:8000',
+    'localhost:8000',
     'localhost:2222',
     'pgadmin.thatyou.cn',
     'pink.thatyou.cn',
@@ -192,7 +194,7 @@ USE_I18N = True
 
 USE_L10N = True
 
-USE_TZ = True
+# USE_TZ = TrueAllowedOrigin
 
 
 # Static files (CSS, JavaScript, Images)
@@ -212,3 +214,12 @@ MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media/')
 CKEDITOR_UPLOAD_PATH = 'uploads/'
 CKEDITOR_IMAGE_BACKEND = 'pillow'
+
+
+# django-jet 配置
+JET_DEFAULT_THEME = 'default'
+JET_SIDE_MENU_COMPACT = True
+
+
+# 登录成功后重定向页面
+LOGIN_REDIRECT_URL = '/bookstore/'
