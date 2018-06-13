@@ -2,6 +2,54 @@
 {% load static %}
 {% block mainContent %}
 
-{{ customer.username }}
+{% include 'bookstore/common/top_menu.html' %}
+<div class="container">
+    <header class="section" style="margin: 1rem 0; padding: 0;">
+      <div class="level">
+        <div class="level-left">
+          <div class="level-item">
+            <img alt="LOGO" style="width: 168px; height: 5rem;" src="https://ss0.bdstatic.com/70cFvHSh_Q1YnxGkpoWK1HF6hhy/it/u=454171939,1037492627&fm=27&gp=0.jpg">
+          </div>
+        </div>
+      </div>
+    </header>
+    <div class="columns" style="margin: 0;">
+      <div class="column is-one-fifth" style="background-color: #eee;">
+        <aside class="menu">
+          <p class="menu-label">
+            帐户管理
+          </p>
+          <ul class="menu-list">
+            <li><a>个人信息</a></li>
+            <li><a>修改密码</a></li>
+          </ul>
+          <p class="menu-label">
+            订单中心
+          </p>
+          <ul class="menu-list">
+            <li><a>我的订单</a></li>
+            <li><a>地址管理</a></li>
+            <li><a>发票管理</a></li>
+          </ul>
+          <p class="menu-label">
+            客户服务
+          </p>
+          <ul class="menu-list">
+            <li><a>帮助中心</a></li>
+            <li><a>售后服务</a></li>
+            <li><a>意见建议</a></li>
+          </ul>
+        </aside>
+      </div>
+      <div class="column" style="background-color: #fff;">
+        {{ customer.username }}
+      </div>
+    </div>
 
+</div>
+
+{% endblock %}
+
+{% block mainFooter %}
+   {% include 'bookstore/common/footer.html' %}
 {% endblock %}

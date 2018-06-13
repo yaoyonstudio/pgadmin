@@ -3,7 +3,7 @@
 
 {% block mainHeader %}
   {% include 'bookstore/common/top_menu.html' %}
-  <div class="container is-fluid" style="padding: 1rem 0;">
+  <div class="container" style="padding: 1rem 0;">
     <div class="level">
       <!-- Left side -->
       <div class="level-left">
@@ -61,7 +61,7 @@
     </div>
   </div>
   <nav class="navbar is-info">
-  <div class="container is-fluid">
+  <div class="container">
     <div id="navbarExampleTransparentExample" class="navbar-menu">
     <div class="navbar-brand" style="margin-left: 0;">
       <p class="navbar-item has-background-link" style="width: 168px; justify-content: center;">书籍分类</p>
@@ -88,13 +88,5 @@
 {% endblock %}
 
 {% block mainFooter %}
-  <footer class="footer" style="margin-top: 2rem; background-color: #eee;">
-    <div class="container">
-      <div class="content has-text-centered">
-        <p>
-          版权所有@copyright 2018</a>
-        </p>
-      </div>
-    </div>
-  </footer>
+   {% include 'bookstore/common/footer.html' %}
 {% endblock %}

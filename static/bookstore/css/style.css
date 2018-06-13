@@ -1,5 +1,6 @@
 body {
     background-color: #f4f4f4;
+    min-height: 100vh;
 }
 
 img {
@@ -149,3 +150,58 @@ img {
     color: #666;
     text-decoration: line-through;
 }
+
+.footer_menus {
+    border-bottom: 1px solid #ddd;
+    padding-bottom: 12px;
+}
+.footer_menus dt {
+    color: #777;
+    font-size: 14px;
+    font-weight: 600;
+    margin-bottom: 2px;
+    padding-left: 10px;
+}
+.footer_menus dd {
+    padding-left: 32px;
+}
+.footer_menus a {
+    color: #666;
+    font-size: .12rem;
+}
+.footer_menus a:hover, .bottom_menus a:hover {
+    color: #d33;
+}
+
+.bottom_menus {
+    text-align: center;
+}
+.bottom_menus li {
+    display: inline-block;
+}
+.bottom_menus li a {
+    display: block;
+    padding: 0 12px;
+}
+.bottom_menus li:not(:last-child) {
+    border-right: 1px solid #ccc;
+}
+.bottom_menus a {
+    color: #666;
+    font-size: 12px;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
